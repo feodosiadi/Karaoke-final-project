@@ -1,0 +1,51 @@
+.container {
+    background-color: #000; /* Темный фон */
+    min-height: 100vh; /* Высота на 100% от высоты окна */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .center-text {
+    text-align: center;
+    color: #fff; /* Цвет текста заголовка */
+  }
+  
+  .input-style {
+    width: 100%; /* Ширина полей ввода */
+    font-size: 18px; /* Размер шрифта */
+    color: #fff; /* Цвет текста */
+    background-color: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Полупрозрачная рамка */
+    border-radius: 8px; /* Скругленные углы */
+    padding: 10px; /* Внутренние отступы */
+    margin-bottom: 20px; /* Отступ между полями */
+  }
+  
+  .button-primary {
+    width: 250px; /* Ширина кнопки */
+    height: 60px; /* Высота кнопки */
+    font-size: 20px; /* Размер шрифта кнопки */
+    background-color: rgba(255, 165, 0, 0.9); /* Цвет фона кнопки */
+    color: #fff; /* Цвет текста кнопки */
+    border: none; /* Убираем рамку */
+    box-shadow: 0 0 15px rgba(255, 165, 0, 0.5); /* Светящаяся рамка */
+    transition: background-color 0.3s ease; /* Плавный переход */
+  }
+  
+  .button-primary:hover {
+    background-color: rgba(255, 165, 0, 1); /* Цвет кнопки при наведении */
+  }
+  
+  .glowing-box {
+    padding: 20px; /* Внутренние отступы */
+    border-radius: 15px; /* Скругленные углы для формы */
+    box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.6); /* Светящаяся жёлтая рамка */
+    transition: box-shadow 0.3s ease; /* Плавный переход */
+  }
+  
+  .glowing-box:hover {
+    box-shadow: 0 0 30px 10px rgba(255, 255, 0, 0.9); /* Усиленное свечение при наведении */
+  }
+  
