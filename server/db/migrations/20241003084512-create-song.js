@@ -22,6 +22,9 @@ module.exports = {
       text: {
         type: Sequelize.TEXT,
       },
+      img: {
+        type: Sequelize.STRING,
+      },
       genreId: {
         type: Sequelize.INTEGER,
         references: {

@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       minus: DataTypes.STRING,
       acapella: DataTypes.STRING,
       text: DataTypes.TEXT,
+      img: DataTypes.STRING,
       genreId: DataTypes.INTEGER,
     },
     {
