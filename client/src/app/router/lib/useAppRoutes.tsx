@@ -17,7 +17,7 @@ export default function useAppRoutes(): RouteObject[] {
       element: <MainPage />,
     },
     {
-      element: <ProtectedRoute isAllowed={status !== UserStatus.Logged} redirectPath="/" />,
+      element: <ProtectedRoute isAllowed={status === UserStatus.Guest} redirectPath="/" />,
       children: [
         {
           path: '/signin',
