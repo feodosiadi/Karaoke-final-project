@@ -42,6 +42,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        
+   
       ],
       {returning: true},
     );
