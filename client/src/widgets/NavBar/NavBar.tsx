@@ -19,7 +19,6 @@ export default function NavBar(): JSX.Element {
       </Text>
 
       <Group spacing="sm" style={{ marginLeft: 'auto' }}>
-        {/* Навигационные кнопки */}
         <Button variant="subtle" onClick={() => navigate('/genres')}>
           Жанры
         </Button>
