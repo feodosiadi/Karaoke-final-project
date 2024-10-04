@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Group, Grid, Container, Title, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import './MainPage.styles.css';
@@ -6,9 +6,24 @@ import './MainPage.styles.css';
 export default function MainPage(): JSX.Element {
   const navigate = useNavigate();
   const [brightness, setBrightness] = useState(1);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const toggleBrightness = () => {
     setBrightness((prevBrightness) => (prevBrightness === 1 ? 0.5 : 1));
+  };
+
+  const playMusic = () => {
+    if (audioRef.current) {
+      if (!isPlaying) {
+        audioRef.current.volume = 0.06;
+        audioRef.current.play();
+        setIsPlaying(true);
+      } else {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
   };
 
   return (
@@ -23,8 +38,12 @@ export default function MainPage(): JSX.Element {
       <div className="text-container">
         <Container size="lg">
           <Grid justify="center" align="center" gutter="lg">
-            <Grid.Col span={6} className="center-text">
-              <img src="../../public/Plastinka.png" alt="Spinning Vinyl" className="spinning-vinyl" />
+            <Grid.Col span={6} className="center-text" onClick={playMusic}>
+              <img
+                src="../../public/Plastinka.png"
+                alt="Spinning Vinyl"
+                className="spinning-vinyl"
+              />
             </Grid.Col>
 
             <Grid.Col span={10}>
@@ -72,9 +91,11 @@ export default function MainPage(): JSX.Element {
       <img
         onClick={toggleBrightness}
         className="fixed-button"
-        src={brightness === 1 ?  '../../public/toggleOn.png' : '../../public/toggleOf.png'}
+        src={brightness === 1 ? '../../public/toggleOn.png' : '../../public/toggleOf.png'}
         alt={brightness === 1 ? 'Выключить свет' : 'Включить свет'}
       />
+
+      <audio ref={audioRef} src="../../public/mikhail-krug-vladimirskijj-central.mp3" loop />
     </div>
   );
 }
