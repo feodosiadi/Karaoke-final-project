@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button, Group, Grid, Container, Title, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import './MainPage.styles.css';

@@ -11,6 +11,11 @@ class SongService {
     const data = await this.#models.Song.findAll({ where: { genreId: id } });
     return data;
   }
+
+  async getOneSongId(id) {
+    const data = await this.#models.Song.findByPk(id);
+    return data;
+  }
 }
 
 const songService = new SongService(models);

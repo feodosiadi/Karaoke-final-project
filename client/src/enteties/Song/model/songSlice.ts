@@ -1,18 +1,20 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { SongType } from './types';
-import { getAllSongsByGenre } from './songThunk';
-import { GenreT } from '../../Genre/model/types';
+import { getAllSongsByGenreThunk, getOneSongThunk } from './songThunk';
+import type { GenreT } from '../../Genre/model/types';
 import { getAllGenresThunk } from '../../Genre/model/genreThunk';
 
 export type SongState = {
   songsByGenre: SongType[];
   genre: GenreT[];
+  oneSong: SongType | null;
 };
 
 const initialState: SongState = {
   songsByGenre: [],
   genre: [],
+  oneSong: null,
 };
 
 export const songSlice = createSlice({
@@ -21,10 +23,10 @@ export const songSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllSongsByGenre.fulfilled, (state, action: PayloadAction<SongType[]>) => {
+      .addCase(getAllSongsByGenreThunk.fulfilled, (state, action: PayloadAction<SongType[]>) => {
         state.songsByGenre = [...action.payload];
       })
-      .addCase(getAllSongsByGenre.rejected, (state) => {
+      .addCase(getAllSongsByGenreThunk.rejected, (state) => {
         state.songsByGenre = [];
       })
       .addCase(getAllGenresThunk.fulfilled, (state, action) => {
@@ -32,6 +34,12 @@ export const songSlice = createSlice({
       })
       .addCase(getAllGenresThunk.rejected, (state) => {
         state.genre = [];
+      })
+      .addCase(getOneSongThunk.fulfilled, (state, action) => {
+        state.oneSong = action.payload
+      })
+      .addCase(getOneSongThunk.rejected, (state) => {
+        state.oneSong = null
       });
   },
 });

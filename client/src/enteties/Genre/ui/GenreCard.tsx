@@ -8,6 +8,8 @@ type GenreCard = {
 };
 
 export default function GenreCard({ genre }: GenreCard): JSX.Element {
+  console.log(genre);
+  
     const navigate = useNavigate()
   return (
     <Button variant="filled" color="yellow" size="xl" radius="md" onClick={() => {navigate(`/genres/${genre.id}/songs`)}}>

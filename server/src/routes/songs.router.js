@@ -22,4 +22,22 @@ songsRouter.route('/:genreId').get(async (req, res) => {
   }
 });
 
+songsRouter.route('/one/:songId').get(async (req, res) => {
+  try {
+    const { songId } = req.params;    
+    if (!songId || Number.isNaN(Number(songId))) {
+      res.status(400).json({ message: 'Invalid id' });
+    }
+    const oneSong = await songService.getOneSongId(songId);
+    
+    if (!oneSong) {
+      return res.status(400).json({ message: 'No this song' });
+    }
+    return res.status(200).json(oneSong);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = songsRouter;
