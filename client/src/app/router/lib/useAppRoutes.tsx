@@ -6,6 +6,7 @@ import SignInPage from '../../../pages/SignIn/SignInPage';
 import SignUpPage from '../../../pages/SignUp/SignUpPage';
 import { useAppSelector } from '../../../shared/lib/hooks';
 import { UserStatus } from '../../../enteties/User/model/types';
+import GenresPage from '../../../pages/Genre/GenresPage';
 
 export default function useAppRoutes(): RouteObject[] {
   const status = useAppSelector((store) => store.auth.user.status);
@@ -13,12 +14,12 @@ export default function useAppRoutes(): RouteObject[] {
 
   return [
     {
-      path: '/',
-      element: <MainPage />,
-    },
-    {
-      element: <ProtectedRoute isAllowed={status === UserStatus.Guest} redirectPath="/" />,
+      element: <ProtectedRoute isAllowed={status !== UserStatus.Logged} redirectPath="/genres" />,
       children: [
+        {
+          path: '/',
+          element: <MainPage />,
+        },
         {
           path: '/signin',
           element: <SignInPage />,
@@ -26,6 +27,15 @@ export default function useAppRoutes(): RouteObject[] {
         {
           path: '/signup',
           element: <SignUpPage />,
+        },
+      ],
+    },
+    {
+      element: <ProtectedRoute isAllowed={status === UserStatus.Logged} redirectPath="/" />,
+      children: [
+        {
+          path: '/genres',
+          element: <GenresPage />,
         },
       ],
     },
