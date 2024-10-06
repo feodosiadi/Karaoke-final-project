@@ -40,7 +40,7 @@ export default function useAppRoutes(): RouteObject[] {
           element: <GenresPage />,
         },
         {
-          path: '/genres/:genreId/songs',
+          path: '/genres/:genreId',
           element: <SongsPage />,
         },
         {

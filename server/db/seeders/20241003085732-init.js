@@ -54,7 +54,7 @@ module.exports = {
         {
           name: 'Девочка-пай',
           minus: 'song/minus/Девочка+пай+minus_out.mp3',
-          acapella: 'song/acapello/Девочка пай acapella.mp3',
+          acapella: 'song/acapello/Девочка-пай-acapella.wav',
           text: `В тебе было столько желанья,
           И месяц над нами светил
           Когда по маляве, придя на свидание
