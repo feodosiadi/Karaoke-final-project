@@ -29,7 +29,6 @@
 .glowing-box {
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 0 30px 10px rgba(255, 255, 0, 0.9); 
+  box-shadow: 0 0 30px 10px rgba(255, 255, 0, 0.9);
   transition: box-shadow 0.3s ease;
 }
-

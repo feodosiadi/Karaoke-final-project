@@ -40,7 +40,7 @@ export default function MainPage(): JSX.Element {
           <Grid justify="center" align="center" gutter="lg">
             <Grid.Col span={6} className="center-text" onClick={playMusic}>
               <img
-                src="../../public/Plastinka.png"
+                src="../../../public/img/Plastinka.PNG"
                 alt="Spinning Vinyl"
                 className="spinning-vinyl"
               />
@@ -91,11 +91,11 @@ export default function MainPage(): JSX.Element {
       <img
         onClick={toggleBrightness}
         className="fixed-button"
-        src={brightness === 1 ? '../../public/toggleOn.png' : '../../public/toggleOf.png'}
+        src={brightness === 1 ? '../../public/img/toggleOn.png' : '../../public/img/toggleOf.png'}
         alt={brightness === 1 ? 'Выключить свет' : 'Включить свет'}
       />
 
-      <audio ref={audioRef} src="../../public/mikhail-krug-vladimirskijj-central.mp3" loop />
+      <audio ref={audioRef} src="../../public/mainPage/mikhail-krug-vladimirskijj-central.mp3" loop />
     </div>
   );
 }
