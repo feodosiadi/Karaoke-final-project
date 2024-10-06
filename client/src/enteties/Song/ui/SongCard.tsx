@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
+import { Card, Image, Text, Button, Group } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import type { SongType } from '../model/types';
 
@@ -18,7 +18,13 @@ export default function SongCard({ song }: SongT): JSX.Element {
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{song.name}</Text>
       </Group>
-      <Button color="blue" fullWidth mt="md" radius="md" onClick={() => navigate(`/songs/${song.id}`)}>
+      <Button
+        color="blue"
+        fullWidth
+        mt="md"
+        radius="md"
+        onClick={() => navigate(`/songs/${song.id}`)}
+      >
         Спеть песню
       </Button>
     </Card>

@@ -29,7 +29,7 @@ export default function NavBar(): JSX.Element {
           // rightSection={icon}
           variant="filled"
           color="red"
-          onClick={() => dispatch(logoutThunk())}
+          onClick={() => void dispatch(logoutThunk())}
         >
           Выйти
         </Button>

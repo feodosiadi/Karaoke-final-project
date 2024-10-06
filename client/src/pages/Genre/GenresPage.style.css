@@ -1,0 +1,9 @@
+body {
+  background-color: black;
+}
+
+.genres-page-container {
+  background-color: transparent;
+  color: white;
+  min-height: 100vh;
+}
