@@ -1,11 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../../enteties/User/model/authSlice';
 import songsReducer from '../../enteties/Song/model/songSlice';
+import recordReducer from '../../enteties/Record/model/recordSlice';
+
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     songs: songsReducer,
+    record: recordReducer
   },
 });
 

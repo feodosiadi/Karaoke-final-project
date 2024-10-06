@@ -9,12 +9,14 @@ export type SongState = {
   songsByGenre: SongType[];
   genre: GenreT[];
   oneSong: SongType | null;
+  error: null | string
 };
 
 const initialState: SongState = {
   songsByGenre: [],
   genre: [],
   oneSong: null,
+  error: null
 };
 
 export const songSlice = createSlice({
@@ -40,6 +42,7 @@ export const songSlice = createSlice({
       })
       .addCase(getOneSongThunk.rejected, (state) => {
         state.oneSong = null
+        state.error = 'Нет песни'
       });
   },
 });
