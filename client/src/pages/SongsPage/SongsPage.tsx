@@ -14,7 +14,7 @@ export default function SongsPage(): JSX.Element {
 
   useEffect(() => {
     void dispatch(getAllSongsByGenreThunk(Number(genreId)));
-  }, []);
+  }, [dispatch, genreId]);
 
   console.log(songsByGenre);
   
