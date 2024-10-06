@@ -16,6 +16,11 @@ class SongService {
     const data = await this.#models.Song.findOne({ where: { id } });
     return data;
   }
+
+  async postOnRecord(data) {
+    const res = await this.#models.Record.create(data);
+    return res;
+  }
 }
 
 const songService = new SongService(models);

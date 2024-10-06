@@ -1,14 +1,13 @@
 import React from 'react';
 import { Container, Group, Button, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import { IconLogout } from '@tabler/icons-react';
 import { useAppDispatch } from '../../shared/lib/hooks';
 import { logoutThunk } from '../../enteties/User/model/authThunk';
 
 export default function NavBar(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const icon = <IconLogout size={14} />;
+  // const icon = <IconLogout size={14} />;
 
   return (
     <Container
@@ -27,7 +26,7 @@ export default function NavBar(): JSX.Element {
         </Button>
         <Button
           justify="center"
-          rightSection={icon}
+          // rightSection={icon}
           variant="filled"
           color="red"
           onClick={() => dispatch(logoutThunk())}
