@@ -90,12 +90,12 @@
   }
 }
 
-@media screen and (max-width: 1500px) {
+/* @media screen and (max-width: 1500px) {
   .fixed-button {
     bottom: -10%;
     right: -3%;
   }
-}
+} */
 
 /* @media screen and (max-width: 1200px) {
   .fixed-button {
