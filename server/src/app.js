@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const tokensRouter = require('./routes/tokens.router');
 const authRouter = require('./routes/auth.router');
 const genresRouter = require('./routes/genres.router');
@@ -12,7 +13,9 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use('/public',express.static('public'));
 
 app.use('/api/songs', songsRouter);
 app.use('/api/genres', genresRouter);

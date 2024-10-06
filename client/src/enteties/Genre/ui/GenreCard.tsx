@@ -18,7 +18,7 @@ export default function GenreCard({ genre }: GenreCardType): JSX.Element {
       size="xl"
       radius="md"
       onClick={() => {
-        navigate(`/genres/${genre.id}/songs`);
+        navigate(`/genres/${genre.id}`);
       }}
     >
       {genre.name}

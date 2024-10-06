@@ -34,7 +34,7 @@ class AuthService {
   }
 
   async checkAuth(): Promise<AuthSchemaT> {
-    const res = await this.client.get('/tokens/refresh');
+    const res = await this.client.get('/tokens/refresh');    
     return authSchema.parse(res.data);
   }
 

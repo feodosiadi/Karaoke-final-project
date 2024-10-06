@@ -12,7 +12,7 @@ export default function SongCard({ song }: SongT): JSX.Element {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
-        <Image src={`/${song.img}`} height={160} alt="Norway" />
+        <Image src={`/public/${song.img}`} height={160} alt="Norway" />
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">
