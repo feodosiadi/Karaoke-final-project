@@ -1,6 +1,6 @@
 import type { AxiosError } from 'axios';
 import axios from 'axios';
-import { AppStore } from '../../app/lib/store';
+import type { AppStore } from '../../app/lib/store';
 import { authSchema } from '../../enteties/User/model/schema';
 
 let store: AppStore | undefined;

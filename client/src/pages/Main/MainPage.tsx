@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Group, Grid, Container, Title, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import './MainPage.styles.css';
+import './MainPage.style.css';
 
 export default function MainPage(): JSX.Element {
   const navigate = useNavigate();
@@ -95,7 +95,11 @@ export default function MainPage(): JSX.Element {
         alt={brightness === 1 ? 'Выключить свет' : 'Включить свет'}
       />
 
-      <audio ref={audioRef} src="../../public/mainPage/mikhail-krug-vladimirskijj-central.mp3" loop />
+      <audio
+        ref={audioRef}
+        src="../../public/mainPage/mikhail-krug-vladimirskijj-central.mp3"
+        loop
+      />
     </div>
   );
 }

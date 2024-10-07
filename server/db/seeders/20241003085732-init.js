@@ -34,18 +34,18 @@ module.exports = {
       [
         {
           name: 'Шансон',
+          img: 'img/krug.jpg',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: 'И всякое',
+          name: 'Всякое',
+          img: 'img/trofim.jpg',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-        
-   
       ],
-      {returning: true},
+      { returning: true },
     );
 
     await queryInterface.bulkInsert(
@@ -73,7 +73,7 @@ module.exports = {
           Девочка-пай, ты не грусти
           И не скучай`,
           img: 'song/img/devochka-pie.jpg',
-          genreId: genres[0].id ,
+          genreId: genres[0].id,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

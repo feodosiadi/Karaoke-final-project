@@ -1,9 +1,215 @@
+/* body {
+  background-color: black;
+}
+
+.page-container {
+  position: relative; 
+}
+
+.genres-page-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  padding-top: 0;
+  background-color: transparent;
+  color: white;
+  min-height: 100vh;
+}
+
+.genre-item {
+  cursor: pointer;
+  transition: color 0.3s;
+  width: 100%;
+  text-align: center;
+  font-size: 72px;
+  font-family: 'Stalinist One', sans-serif;
+  letter-spacing: 20px;
+  font-weight: 800;
+  font-style: normal;
+  padding: 20px;
+  margin: 5px 0;
+  background-color: transparent;
+  text-transform: uppercase;
+}
+
+.hovered-image {
+  position: absolute;
+  bottom: -5px;
+  right: -280px;
+  transform-origin: right bottom;
+  z-index: 10;
+}
+
+.hovered-image img {
+  width: 400px;
+  height: auto;
+}
+
+.hovered-image.img-enter {
+  animation: slideInArc 0.5s forwards;
+}
+
+.hovered-image.img-leave {
+  animation: slideOutArc 1s forwards;
+}
+
+@keyframes slideInArc {
+  from {
+    transform: rotate(90deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideOutArc {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+.microphone {
+  position: absolute;
+  top: 5vh;
+  left: -20vw;
+}
+
+.microphone img {
+  width: 250px;
+  animation: microDown 1s forwards;
+}
+
+@keyframes microDown {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(80px);
+  }
+} */
+
 body {
   background-color: black;
 }
 
+.page-container {
+  position: relative;
+}
+
 .genres-page-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.25rem;
+  padding-top: 0;
   background-color: transparent;
   color: white;
   min-height: 100vh;
+}
+
+.genre-item {
+  cursor: pointer;
+  transition: color 0.3s;
+  width: 100%;
+  text-align: center;
+  font-size: 4.5rem; /* 72px */
+  font-family: 'Stalinist One', sans-serif;
+  letter-spacing: 1.25rem; /* 20px */
+  font-weight: 800;
+  font-style: normal;
+  padding: 1.25rem; /* 20px */
+  margin: 0.3125rem 0; /* 5px 0 */
+  background-color: transparent;
+  text-transform: uppercase;
+}
+
+.hovered-image {
+  position: absolute;
+  bottom: -0.3125rem; /* -5px */
+  right: -17.5rem; /* -280px */
+  transform-origin: right bottom;
+  z-index: 10;
+}
+
+.hovered-image img {
+  width: 25rem; /* 400px */
+  height: auto;
+}
+
+.hovered-image.img-enter {
+  animation: slideInArc 0.5s forwards;
+}
+
+.hovered-image.img-leave {
+  animation: slideOutArc 1s forwards;
+}
+
+
+
+@keyframes slideInArc {
+  from {
+    transform: rotate(90deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideOutArc {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+.microphone {
+  position: absolute;
+  transform: translateY(-20rem);
+  left: -18.5rem; /* Примерно -20vw */
+}
+
+.microphone img {
+  width: 30rem; /* Примерно 480px */
+  animation: microDown 1s forwards;
+}
+
+.microphone.img-enter {
+  animation: microDown 2s forwards;
+}
+
+.microphone.img-leave {
+  animation: microUp 2s forwards;
+}
+
+@keyframes microDown {
+  from {
+    transform: translateY(-20rem);
+  }
+
+  to {
+    transform: translateY(-8rem); /* Примерно 80px */
+  }
+}
+
+@keyframes microUp {
+  from {
+    transform: translateY(-8rem);
+  }
+
+  to {
+    transform: translateY(-20rem); /* Вернуть в исходную позицию */
+  }
 }

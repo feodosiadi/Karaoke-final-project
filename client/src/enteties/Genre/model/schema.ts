@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-export const genreSchema = z.object({
+const genreSchema = z.object({
   id: z.number(),
+  img: z.string(),
   name: z.string(),
 });
+
+export default genreSchema;

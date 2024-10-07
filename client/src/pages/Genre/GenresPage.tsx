@@ -1,28 +1,72 @@
-import { Container, Grid } from '@mantine/core';
-import React, { useEffect } from 'react';
+import { Container, Grid, Text } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '../../widgets/NavBar/NavBar';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { getAllGenresThunk } from '../../enteties/Genre/model/genreThunk';
-import GenreCard from '../../enteties/Genre/ui/GenreCard';
 import './GenresPage.style.css';
 
 export default function GenresPage(): JSX.Element {
   const genres = useAppSelector((store) => store.songs.genre);
   const dispatch = useAppDispatch();
-  console.log(genres);
+  const [hoveredImage, setHoveredImage] = useState<string | null>(null);
+  const [imageClass, setImageClass] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     void dispatch(getAllGenresThunk());
   }, [dispatch]);
 
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
   return (
-    <Container className="genres-page-container">
+    <div className="page-container">
       <NavBar />
-      {genres.map((genre) => (
-        <Grid key={genre.id}>
-          <GenreCard genre={genre} />
+      <Container className="genres-page-container">
+        <Grid>
+          {genres.map((genre) => (
+            <Grid.Col span={12} key={genre.id}>
+              <Text
+                className="genre-item"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = getRandomColor();
+                  if (genre.name.toLowerCase() === 'шансон') {
+                    setHoveredImage('../../../public/genresPage/krug-genres.jpeg');
+                    setImageClass('img-enter');
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'white';
+                  if (genre.name.toLowerCase() === 'шансон') {
+                    setImageClass('img-leave');
+                    setTimeout(() => setHoveredImage(null), 500);
+                  }
+                }}
+                onClick={() => {
+                  navigate(`/genres/${genre.id}`);
+                }}
+              >
+                {genre.name}
+              </Text>
+            </Grid.Col>
+          ))}
         </Grid>
-      ))}
-    </Container>
+        {hoveredImage && (
+          <div className={`hovered-image ${imageClass}`}>
+            <img src={hoveredImage} alt="Hovered Genre" />
+          </div>
+        )}
+        <div className={`microphone ${imageClass}`}>
+          <img src="../../../public/genresPage/microphone.png" alt="Hovered Genre" />
+        </div>
+      </Container>
+    </div>
   );
 }
