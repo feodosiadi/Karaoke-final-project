@@ -57,6 +57,7 @@ export default function SignInPage(): JSX.Element {
           border: '0.5% solid white', // Белая рамка
           zIndex: 1, // Чтобы форма отображалась поверх фона с лампочками
           textAlign: 'center',
+          position: 'relative', // Для правильного позиционирования
         })}
       >
         <Title order={1} sx={{ marginBottom: '4%', color: 'white', fontSize: '2rem' }}>
@@ -112,6 +113,24 @@ export default function SignInPage(): JSX.Element {
               fullWidth
             >
               Войти
+            </Button>
+          </Group>
+
+          {/* Кнопка закрытия формы */}
+          <Group mt="sm" justify="center" align="center">
+            <Button
+              onClick={() => navigate('/')} // Навигация на главную страницу
+              variant="transparent"
+              color='red'
+              size="sm" // Маленькая кнопка
+              style={{
+                backgroundColor: 'black', // Серый цвет
+                fontSize: '12px', // Маленький текст
+                borderRadius: '4px', // Немного закругляем углы
+                padding: '5px 10px',
+              }}
+            >
+              Вернуться на главную
             </Button>
           </Group>
         </form>

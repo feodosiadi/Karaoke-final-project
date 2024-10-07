@@ -75,7 +75,23 @@ export default function SignUpPage(): JSX.Element {
 
           <Group mt="md" position="center">
             <Button type="submit" className="button-primary">
-              Зарегистрироваться
+              Регистрация
+            </Button>
+          </Group>
+          <Group mt="sm" justify="center" align="center">
+            <Button
+              onClick={() => navigate('/')} // Навигация на главную страницу
+              variant="transparent"
+              color='red'
+              size="sm" // Маленькая кнопка
+              style={{
+                backgroundColor: 'black', // Серый цвет
+                fontSize: '12px', // Маленький текст
+                borderRadius: '4px', // Немного закругляем углы
+                padding: '5px 10px',
+              }}
+            >
+              Вернуться на главную
             </Button>
           </Group>
         </form>
