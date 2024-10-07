@@ -200,4 +200,40 @@ songsRouter
     }
   });
 
+songsRouter.route('/leaderboard/all/').get(async (req, res) => {
+  try {
+    const leaderBoard = await songService.getLeaderBoard();
+
+    if (!leaderBoard) {
+      return res.status(400).json({ message: 'No leaders' });
+    }
+
+    return res.status(200).json(leaderBoard);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+songsRouter.route('/leaderboard/one/:songId').get(async (req, res) => {
+  try {
+    const { songId } = req.params;
+
+    if (!songId || Number.isNaN(Number(songId))) {
+      return res.status(400).json({ message: 'Invalid id' });
+    }
+
+    const leaderBoardByOneSong = await songService.getLeaderBoardOfOneSong(songId);
+
+    if (!leaderBoardByOneSong) {
+      return res.status(400).json({ message: 'No leaders' });
+    }
+
+    return res.status(200).json(leaderBoardByOneSong);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = songsRouter;

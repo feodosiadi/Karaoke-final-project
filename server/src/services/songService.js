@@ -21,6 +21,23 @@ class SongService {
     const res = await this.#models.Record.create(data);
     return res;
   }
+
+  async getLeaderBoardOfOneSong(songId) {
+    const data = await this.#models.Record.findAll({
+      where: { songId },
+      order: [['score', 'DESC']],
+      limit: 5
+    });
+    return data;
+  }
+
+  async getLeaderBoard () {
+    const data = await this.#models.Record.findAll({
+      order: [['score', 'DESC']],
+      limit: 10
+    });
+    return data;
+  }
 }
 
 const songService = new SongService(models);
