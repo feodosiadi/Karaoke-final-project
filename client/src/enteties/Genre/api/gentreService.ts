@@ -1,8 +1,8 @@
 import type { AxiosInstance } from 'axios';
 import { ZodError } from 'zod';
 import axiosInstance from '../../../shared/api/axiosInstance';
-import { GenreT } from '../model/types';
-import { genreSchema } from '../model/schema';
+import type { GenreT } from '../model/types';
+import genreSchema from '../model/schema';
 
 class GenreService {
   constructor(private client: AxiosInstance) {}

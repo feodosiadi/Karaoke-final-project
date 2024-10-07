@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   Genre.init(
     {
       name: DataTypes.STRING,
+      img: DataTypes.STRING,
     },
     {
       sequelize,

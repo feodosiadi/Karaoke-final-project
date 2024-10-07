@@ -3,6 +3,7 @@ import { Container, Group, Button, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../shared/lib/hooks';
 import { logoutThunk } from '../../enteties/User/model/authThunk';
+import './NavBar.style.css';
 
 export default function NavBar(): JSX.Element {
   const navigate = useNavigate();
@@ -10,7 +11,8 @@ export default function NavBar(): JSX.Element {
   // const icon = <IconLogout size={14} />;
 
   return (
-    <Container
+    <div
+      className="nav-container"
       style={{ backgroundColor: '#A9A9A9', padding: '10px', display: 'flex', alignItems: 'center' }}
     >
       <Text weight={700} size="xl" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
@@ -21,7 +23,7 @@ export default function NavBar(): JSX.Element {
         <Button variant="subtle" onClick={() => navigate('/genres')}>
           Жанры
         </Button>
-        <Button variant="subtle" onClick={() => navigate('/leaders')}>
+        <Button variant="subtle" onClick={() => navigate('/leaderboard')}>
           Таблица лидеров
         </Button>
         <Button
@@ -34,6 +36,6 @@ export default function NavBar(): JSX.Element {
           Выйти
         </Button>
       </Group>
-    </Container>
+    </div>
   );
 }
