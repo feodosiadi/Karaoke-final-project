@@ -4,7 +4,7 @@ import type { SongType } from './types';
 import { getAllSongsByGenreThunk, getOneSongThunk } from './songThunk';
 import type { GenreT } from '../../Genre/model/types';
 import { getAllGenresThunk } from '../../Genre/model/genreThunk';
-import { LeaderType } from '../../Leaders/model/type';
+import type { LeaderType } from '../../Leaders/model/type';
 import { getAllLeadersThunk } from '../../Leaders/model/leaderThunk';
 
 export type SongState = {
@@ -33,18 +33,23 @@ export const songSlice = createSlice({
     builder
       .addCase(getAllSongsByGenreThunk.fulfilled, (state, action: PayloadAction<SongType[]>) => {
         state.songsByGenre = [...action.payload];
+        state.error = null;
       })
       .addCase(getAllSongsByGenreThunk.rejected, (state) => {
         state.songsByGenre = [];
+        state.error = 'Нет песен';
       })
       .addCase(getAllGenresThunk.fulfilled, (state, action) => {
         state.genre = [...action.payload];
+        state.error = null;
       })
       .addCase(getAllGenresThunk.rejected, (state) => {
         state.genre = [];
+        state.error = 'Нет жанров';
       })
       .addCase(getOneSongThunk.fulfilled, (state, action) => {
         state.oneSong = action.payload;
+        state.error = null;
       })
       .addCase(getOneSongThunk.rejected, (state) => {
         state.oneSong = null;
@@ -52,9 +57,11 @@ export const songSlice = createSlice({
       })
       .addCase(getAllLeadersThunk.fulfilled, (state, action) => {
         state.allLeaders = action.payload;
+        state.error = null;
       })
       .addCase(getAllLeadersThunk.rejected, (state) => {
         state.allLeaders = [];
+        state.error = 'Нет лидеров';
       });
   },
 });

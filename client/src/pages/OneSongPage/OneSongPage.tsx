@@ -6,7 +6,8 @@ import { getOneSongThunk } from '../../enteties/Song/model/songThunk';
 import { postOneRecordThunk } from '../../enteties/Record/model/recordThunk';
 import styles from './OneSongPage.module.css';
 import NavBar from '../../widgets/NavBar/NavBar';
-
+import { clearRecord } from '../../enteties/Record/model/recordSlice';
+import ErrorPage from '../Error/ErrorPage';
 
 export default function OneSongPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -25,10 +26,9 @@ export default function OneSongPage(): JSX.Element {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const score = useAppSelector((store) => store.record.record?.score);
   const oneSong = useAppSelector((store) => store.songs.oneSong);
+  const error = useAppSelector((store) => store.songs.error);
 
-console.log(oneSong);
-
-  
+  console.log(error);
 
   // Начало записи
   const startRecording = async () => {
@@ -117,6 +117,7 @@ console.log(oneSong);
           setIsPlaying(true); // Отмечаем, что песня началась
           setIsFinished(false); // Сбрасываем завершение
           startRecording(); // Начало записи
+          dispatch(clearRecord());
         }
         return null;
       });
@@ -129,6 +130,7 @@ console.log(oneSong);
       audioRef.current.play();
       setIsFinished(false); // Сбрасываем завершение при перезапуске
       startRecording(); // Перезапускаем запись
+      dispatch(clearRecord());
     }
   };
 
@@ -168,8 +170,6 @@ console.log(oneSong);
     }
   }, [dispatch, params.songId]);
 
-
-
   useEffect(() => {
     if (oneSong?.subtitles) {
       console.log('Загрузка субтитров с:', oneSong.subtitles);
@@ -191,6 +191,8 @@ console.log(oneSong);
         });
     }
   }, [oneSong?.subtitles]);
+
+  if (error) { return <ErrorPage />}
 
   return (
     <div className={styles.pageContainer}>
@@ -260,7 +262,9 @@ console.log(oneSong);
           })}
         </div>
 
-        {isFinished && <div className={styles.finishedMessage}>Да Вы просто звезда! Ваш счёт – {score} </div>}
+        {isFinished && score && (
+          <div className={styles.finishedMessage}>Да Вы просто звезда! Ваш счёт – {score} </div>
+        )}
       </Container>
       <Button onClick={() => navigate(-1)} className={styles.buttonChangeSong}>
         Сменить песню

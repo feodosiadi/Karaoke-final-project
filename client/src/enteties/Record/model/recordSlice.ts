@@ -15,7 +15,11 @@ const initialState: RecordState = {
 export const recordSlice = createSlice({
   name: 'record',
   initialState,
-  reducers: {},
+  reducers: {
+    clearRecord: (state) => {
+      state.record = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(postOneRecordThunk.fulfilled, (state, action) => {
@@ -30,6 +34,6 @@ export const recordSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {} = recordSlice.actions;
+export const { clearRecord } = recordSlice.actions;
 
 export default recordSlice.reducer;

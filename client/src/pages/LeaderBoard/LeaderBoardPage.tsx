@@ -36,7 +36,6 @@ export default function LeaderBoardPage(): JSX.Element {
               </Table.Tr>
             ))}
           </Table.Tbody>
-          <Table.Caption>Scroll page to see sticky thead</Table.Caption>
         </Table>
       </Container>
     </div>

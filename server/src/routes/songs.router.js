@@ -16,8 +16,7 @@ songsRouter.route('/:genreId').get(async (req, res) => {
       return res.status(400).json({ message: 'Invalid id' });
     }
     const songsByGenre = await songService.getSongsByGenreId(genreId);
-
-    if (!songsByGenre) {
+    if (!songsByGenre || songsByGenre.length === 0) {
       return res.status(400).json({ message: 'No such songs' });
     }
     return res.status(200).json(songsByGenre);
@@ -36,6 +35,8 @@ songsRouter.route('/one/:songId').get(async (req, res) => {
     }
 
     const oneSong = await songService.getOneSongId(songId);
+
+    console.log(oneSong);
 
     if (!oneSong) {
       return res.status(400).json({ message: 'No this song' });

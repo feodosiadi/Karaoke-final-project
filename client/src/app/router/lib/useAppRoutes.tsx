@@ -18,10 +18,6 @@ export default function useAppRoutes(): RouteObject[] {
 
   return [
     {
-      path: '*',
-      element: <ErrorPage />,
-    },
-    {
       element: <ProtectedRoute isAllowed={status !== UserStatus.Logged} redirectPath="/genres" />,
       children: [
         {
@@ -58,6 +54,10 @@ export default function useAppRoutes(): RouteObject[] {
           element: <LeaderBoardPage />,
         },
       ],
+    },
+    {
+      path: '*',
+      element: <ErrorPage />,
     },
   ];
 }
