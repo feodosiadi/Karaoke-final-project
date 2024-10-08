@@ -6,6 +6,7 @@ import type { SignUpForm } from '../../enteties/User/model/types';
 import './SignUpPage.style.css'; // Подключаем файл со стилями
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { setLoading } from '../../enteties/User/model/authSlice';
 
 export default function SignUpPage(): JSX.Element {
   const [passOne, setPassOne] = useState('');
@@ -22,6 +23,7 @@ export default function SignUpPage(): JSX.Element {
       const formData = Object.fromEntries(new FormData(e.currentTarget));
       void dispatch(signUpThunk(formData as SignUpForm));
       navigate('/genres');
+      void dispatch(setLoading());
     }
   };
 
