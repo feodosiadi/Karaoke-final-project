@@ -6,6 +6,7 @@ import { getOneSongThunk } from '../../enteties/Song/model/songThunk';
 import { postOneRecordThunk } from '../../enteties/Record/model/recordThunk';
 import styles from './OneSongPage.module.css';
 import NavBar from '../../widgets/NavBar/NavBar';
+import axiosInstance from '../../shared/api/axiosInstance';
 
 export default function OneSongPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -22,7 +23,8 @@ export default function OneSongPage(): JSX.Element {
   const [isPlaying, setIsPlaying] = useState<boolean>(false); // Состояние для отслеживания воспроизведения
   const [timer, setTimer] = useState<number | null>(null); // Для отсчета времени
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const points = useAppSelector((store) => store.record);
+  const score = useAppSelector((store) => store.record.record?.score);
+  const oneSong = useAppSelector((store) => store.songs.oneSong);
 
   // Начало записи
   const startRecording = async () => {
@@ -69,15 +71,33 @@ export default function OneSongPage(): JSX.Element {
     text: string;
   };
 
-  const parseSRT = (srtText: string): Subtitle[] =>
-    srtText.split('\n\n').map((block) => {
-      const lines = block.split('\n');
-      const times = lines[1].split(' --> ');
-      const startTime = parseTime(times[0]);
-      const endTime = parseTime(times[1]);
-      const text = lines.slice(2).join('\n'); // Оставляем переносы строк
-      return { startTime, endTime, text };
-    });
+  // const parseSRT = (srtText: string): Subtitle[] =>
+  //   srtText.split('\n\n').map((block) => {
+  //     const lines = block.split('\n');
+  //     const times = lines[1].split(' --> ');
+  //     const startTime = parseTime(times[0]);
+  //     const endTime = parseTime(times[1]);
+  //     const text = lines.slice(2).join('\n'); // Оставляем переносы строк
+  //     return { startTime, endTime, text };
+  //   });
+  const parseSRT = (srtText: string): Subtitle[] => {
+    console.log('Текст субтитров:', srtText); // Отладочный вывод для проверки
+    return srtText
+      .split('\n\n')
+      .map((block) => {
+        const lines = block.split('\n');
+        if (lines.length < 2) return null; // Проверка на количество строк в блоке
+
+        const times = lines[1]?.split(' --> ');
+        if (!times || times.length < 2) return null; // Если формат неверный, пропускаем блок
+
+        const startTime = parseTime(times[0]);
+        const endTime = parseTime(times[1]);
+        const text = lines.slice(2).join('\n'); // Оставляем переносы строк
+        return { startTime, endTime, text };
+      })
+      .filter(Boolean) as Subtitle[]; // Фильтруем null значения и приводим тип
+  };
 
   const parseTime = (timeString: string): number => {
     const [hours, minutes, seconds] = timeString.split(':');
@@ -153,24 +173,63 @@ export default function OneSongPage(): JSX.Element {
     }
   }, [dispatch, params.songId]);
 
+  // useEffect(() => {
+  //   if (oneSong?.subtitles) {
+  //     console.log('Загрузка субтитров с:', `/public/${oneSong.subtitles}`);
+  //     axiosInstance(`/public/${oneSong.subtitles}`, {
+  //       responseType: 'text', // Ожидаем текстовый ответ
+  //     })
+  //       .then((res) => {
+  //         console.log('Ответ с субтитрами:', res.data); // Отладочный вывод для проверки ответа
+  //         const parsedSubtitles = parseSRT(res.data); // Разбираем текст субтитров
+  //         setSubtitles(parsedSubtitles); // Сохраняем в стейт
+  //       })
+  //       .catch((error) => {
+  //         console.error('Ошибка при загрузке субтитров:', error);
+  //       });
+  //   }
+  // }, [oneSong?.subtitles]);
+
+  // useEffect(() => {
+  //   // Загрузка субтитров из файла
+  //   fetch(`/public/${oneSong?.subtitles}` || '')
+  //     .then((response) => response.text())
+  //     .then((data) => {
+  //       const parsedSubtitles = parseSRT(data);
+  //       setSubtitles(parsedSubtitles);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Ошибка при загрузке субтитров:', error);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    // Загрузка субтитров из файла
-    fetch('../../../public/song/subtitles/DevochkaPieSubtitles.srt')
-      .then((response) => response.text())
-      .then((data) => {
-        const parsedSubtitles = parseSRT(data);
-        setSubtitles(parsedSubtitles);
+    if (oneSong?.subtitles) {
+      console.log('Загрузка субтитров с:', oneSong.subtitles);
+
+      fetch(`/public/${oneSong?.subtitles}` || '', {
+        method: 'GET',
+        headers: { 'Content-Type': 'text/plain' },
       })
-      .catch((error) => {
-        console.error('Ошибка при загрузке субтитров:', error);
-      });
-  }, []);
+        .then((response) => {
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          return response.text();
+        })
+        .then((data) => {
+          const parsedSubtitles = parseSRT(data);
+          setSubtitles(parsedSubtitles);
+        })
+        .catch((error) => {
+          console.error('Ошибка при загрузке субтитров:', error);
+        });
+    }
+  }, [oneSong?.subtitles]);
 
   return (
     <div className={styles.pageContainer}>
       <NavBar />
       <Container>
-        <h1>ДЕВОЧКА ПАЙ - Караоке</h1>
+        <h1>{oneSong?.name} - Караоке</h1>
 
         {!isPlaying && !timer && !isFinished && (
           <button onClick={handlePlay} className={styles.button}>
@@ -188,7 +247,7 @@ export default function OneSongPage(): JSX.Element {
 
         <audio
           ref={audioRef}
-          src="../../../public/song/minus/Девочка+пай+minus_out.mp3"
+          src={`/public/${oneSong?.minus}`}
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleEnded}
           style={{ display: 'none' }}

@@ -1,13 +1,14 @@
 import type { AxiosInstance } from 'axios';
 import { ZodError } from 'zod';
 import axiosInstance from '../../../shared/api/axiosInstance';
-import { SongType } from '../../Song/model/types';
+import type { RecordType } from '../model/type';
 import { AudioFileType } from '../model/type';
+import { recordSchema } from '../model/schema';
 
 class RecordService {
   constructor(private client: AxiosInstance) {}
 
-  async postRecord(id: SongType['id'], formData: FormData): Promise<void> {
+  async postRecord(id: SongType['id'], formData: FormData): Promise<RecordType> {
     console.log(formData);
     try {
       const res = await this.client.post(`songs/one/${id}/record`, formData, {
@@ -15,6 +16,7 @@ class RecordService {
           'Content-Type': 'multipart/form-data',
         },
       });
+      return recordSchema.parse(res.data);
     } catch (error) {
       if (error instanceof ZodError) {
         console.log('ZOD ERROR getAllGenre', error.issues);

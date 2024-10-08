@@ -53,26 +53,10 @@ module.exports = {
       [
         {
           name: 'Девочка-пай',
-          minus: 'song/minus/Девочка+пай+minus_out.mp3',
-          acapella: 'song/acapello/Девочка-пай-acapella.wav',
-          text: `В тебе было столько желанья,
-          И месяц над нами светил
-          Когда по маляве, придя на свидание
-          Я розы тебе подарил
-          Какой ты казалась серьёзной
-          Качала в ответ головой
-          Когда я сказал, что отнял эти розы
-          В киоске на Первой Ямской
-
-          Как было тепло
-          Что нас с тобой вместе свело
-          Девочка-пай, рядом жиган
-          И хулиган
-          В нашей Твери нету таких
-          Даже среди шкур центровых
-          Девочка-пай, ты не грусти
-          И не скучай`,
-          img: 'song/img/devochka-pie.PNG',
+          minus: '/song/minus/Девочка-пай-minus.mp3',
+          acapella: '/song/acapello/Девочка-пай-acapella.wav',
+          subtitles: '/song/subtitles/Девочка-пай-subtitles.srt',
+          img: '/song/img/devochka-pie.PNG',
           genreId: genres[0].id,
           createdAt: new Date(),
           updatedAt: new Date(),

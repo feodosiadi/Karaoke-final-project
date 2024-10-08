@@ -6,7 +6,7 @@ export const songSchema = z.object({
   name: z.string(),
   minus: z.string(),
   acapella: z.string(),
-  text: z.string(),
+  subtitles: z.string(),
   img: z.string(),
 });
 
