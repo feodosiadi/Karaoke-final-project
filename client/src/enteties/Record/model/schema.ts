@@ -13,7 +13,6 @@ export const audioFileSchema = z.custom<File>(
 );
 
 export const recordSchema = z.object({
-  id: z.number(),
   userId: z.number(),
   songId: z.number(),
   score: z.number(),

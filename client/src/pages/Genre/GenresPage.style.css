@@ -155,7 +155,7 @@ body {
 
 @keyframes slideInArc {
   from {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
   }
 
   to {
@@ -169,7 +169,7 @@ body {
   }
 
   to {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
   }
 }
 
