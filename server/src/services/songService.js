@@ -24,6 +24,7 @@ class SongService {
 
   async getLeaderBoardOfOneSong(songId) {
     const data = await this.#models.Record.findAll({
+      attributes: ['id', 'record', 'userId', 'songId', 'score'],
       where: { songId },
       order: [['score', 'DESC']],
       limit: 5,

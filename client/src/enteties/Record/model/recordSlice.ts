@@ -18,11 +18,13 @@ export const recordSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(postOneRecordThunk.fulfilled, (state) => {
+      .addCase(postOneRecordThunk.fulfilled, (state, action) => {
         state.isRecording = true;
+        state.record = action.payload;
       })
       .addCase(postOneRecordThunk.rejected, (state) => {
         state.isRecording = false;
+        state.record = null;
       });
   },
 });

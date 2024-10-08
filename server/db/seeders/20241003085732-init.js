@@ -61,6 +61,16 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          name: 'Город-Сочи',
+          minus: '/song/minus/Город-Сочи-minus.mp3',
+          acapella: '/song/acapello/Город-Сочи-acapella.wav',
+          subtitles: '/song/subtitles/Город-Сочи-subtitles.srt',
+          img: '/song/img/gorod-sochi.PNG',
+          genreId: genres[0].id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {},
     );
