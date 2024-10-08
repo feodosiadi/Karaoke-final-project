@@ -10,12 +10,17 @@ import GenresPage from '../../../pages/Genre/GenresPage';
 import OneSongPage from '../../../pages/OneSongPage/OneSongPage';
 import SongsPage from '../../../pages/SongsPage/SongsPage';
 import LeaderBoardPage from '../../../pages/LeaderBoard/LeaderBoardPage';
+import ErrorPage from '../../../pages/Error/ErrorPage';
 
 export default function useAppRoutes(): RouteObject[] {
   const status = useAppSelector((store) => store.auth.user.status);
   console.log(status);
 
   return [
+    {
+      path: '*',
+      element: <ErrorPage />,
+    },
     {
       element: <ProtectedRoute isAllowed={status !== UserStatus.Logged} redirectPath="/genres" />,
       children: [
