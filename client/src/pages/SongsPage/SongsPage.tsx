@@ -39,7 +39,7 @@ export default function SongsPage(): JSX.Element {
         {songsByGenre.map((song) => (
           <Grid key={song.id} className={styles.gridItem}>
             <button className={styles.casset} type="button" onClick={() => handlePlaySongAndNavigate(song.id)}>
-              <img src={`/public/${song.img}`} alt={song.name} />
+              <img className={styles.cassetImg} src={`/public/${song.img}`} alt={song.name} />
             </button>
           </Grid>
         ))}

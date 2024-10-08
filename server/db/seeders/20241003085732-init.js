@@ -72,7 +72,7 @@ module.exports = {
           Даже среди шкур центровых
           Девочка-пай, ты не грусти
           И не скучай`,
-          img: 'song/img/devochka-pie.jpg',
+          img: 'song/img/devochka-pie.PNG',
           genreId: genres[0].id,
           createdAt: new Date(),
           updatedAt: new Date(),
