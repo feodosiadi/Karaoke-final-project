@@ -10,4 +10,11 @@ export default defineConfig({
       '/public': 'http://localhost:3000',
     },
   },
+  css: {
+    modules: {
+      // Настройки CSS-модулей
+      scopeBehaviour: 'local',
+      generateScopedName: '[name]__[local]___[hash:base64:5]',
+    },
+  },
 });

@@ -116,21 +116,23 @@ export default function SignInPage(): JSX.Element {
             </Button>
           </Group>
 
-          {/* Кнопка закрытия формы */}
-          <Group mt="sm" justify="center" align="center">
+          <Group mt="md" justify="center" align="center">
             <Button
-              onClick={() => navigate('/')} // Навигация на главную страницу
-              variant="transparent"
-              color='red'
-              size="sm" // Маленькая кнопка
-              style={{
-                backgroundColor: 'black', // Серый цвет
-                fontSize: '12px', // Маленький текст
-                borderRadius: '4px', // Немного закругляем углы
-                padding: '5px 10px',
+              type="submit"
+              onClick={() => navigate('/')}
+              size="xl" // Увеличиваем кнопку
+              sx={{
+                display: 'block', // Явно указываем кнопке быть блочным элементом
+                height: '10vh', // Используем vh для более явного управления высотой
+                fontSize: '1.5rem', // Размер текста на кнопке
+                borderRadius: '2%', // Закругленные углы
               }}
+              variant="gradient"
+              gradient={{ from: '#d3d3d3', to: '#a9a9a9', deg: 105 }} 
+              radius="lg"
+              fullWidth
             >
-              Вернуться на главную
+              На главную
             </Button>
           </Group>
         </form>

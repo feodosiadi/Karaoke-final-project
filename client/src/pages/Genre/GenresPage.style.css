@@ -153,8 +153,6 @@ body {
   animation: slideOutArc 1s forwards;
 }
 
-
-
 @keyframes slideInArc {
   from {
     transform: rotate(90deg);
@@ -178,7 +176,7 @@ body {
 .microphone {
   position: absolute;
   transform: translateY(-20rem);
-  left: -18.5rem; /* Примерно -20vw */
+  left: -12.5rem; /* Примерно -20vw */
 }
 
 .microphone img {

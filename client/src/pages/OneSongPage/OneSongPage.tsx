@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Container } from '@mantine/core';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { getOneSongThunk } from '../../enteties/Song/model/songThunk';
 import { postOneRecordThunk } from '../../enteties/Record/model/recordThunk';
+import styles from './OneSongPage.module.css';
 import NavBar from '../../widgets/NavBar/NavBar';
 
 export default function OneSongPage(): JSX.Element {
-
   const dispatch = useAppDispatch();
   const params = useParams();
   const [isRecording, setIsRecording] = useState(false);
@@ -15,14 +15,15 @@ export default function OneSongPage(): JSX.Element {
   const [isFinished, setIsFinished] = useState(false); // Состояние для завершения аудио
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
-
+  const navigate = useNavigate();
   const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
   const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState<number>(-1); // Индекс текущего субтитра
   const [highlightedWordIndex, setHighlightedWordIndex] = useState<number>(-1); // Индекс слова, которое поётся сейчас
   const [isPlaying, setIsPlaying] = useState<boolean>(false); // Состояние для отслеживания воспроизведения
   const [timer, setTimer] = useState<number | null>(null); // Для отсчета времени
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const points = useAppSelector((store) => store.record.)
+  const points = useAppSelector((store) => store.record);
+
   // Начало записи
   const startRecording = async () => {
     try {
@@ -166,133 +167,78 @@ export default function OneSongPage(): JSX.Element {
   }, []);
 
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
-      <h1>ДЕВОЧКА ПАЙ - Караоке</h1>
+    <div className={styles.pageContainer}>
+      <NavBar />
+      <Container>
+        <h1>ДЕВОЧКА ПАЙ - Караоке</h1>
 
-      {/* Панель управления */}
-      {!isPlaying && !timer && !isFinished && (
-        <button
-          onClick={() => {
-            handlePlay();
-          }}
-          style={{
-            padding: '20px 40px',
-            fontSize: '24px',
-            backgroundColor: 'green',
-            color: 'white',
-            border: 'none',
-            borderRadius: '10px',
-            cursor: 'pointer',
-            textShadow: '0 0 10px #00FF00, 0 0 20px #00FF00', // Светящаяся зелёная кнопка
-            boxShadow: '0 0 10px 5px rgba(0, 255, 0, 0.7)',
-            transition: 'background-color 0.3s ease',
-          }}
-        >
-          Начать запись
-        </button>
-      )}
+        {!isPlaying && !timer && !isFinished && (
+          <button onClick={handlePlay} className={styles.button}>
+            Начать запись
+          </button>
+        )}
 
-      {isPlaying && !isFinished && (
-        <button
-          onClick={handleRestart}
-          style={{
-            padding: '20px 40px',
-            fontSize: '24px',
-            backgroundColor: 'green',
-            color: 'white',
-            border: 'none',
-            borderRadius: '10px',
-            cursor: 'pointer',
-            textShadow: '0 0 10px #00FF00, 0 0 20px #00FF00',
-            boxShadow: '0 0 10px 5px rgba(0, 255, 0, 0.7)',
-            transition: 'background-color 0.3s ease',
-          }}
-        >
-          Записать заново
-        </button>
-      )}
+        {isPlaying && !isFinished && (
+          <button onClick={handleRestart} className={styles.button}>
+            Записать заново
+          </button>
+        )}
 
-      {/* Таймер обратного отсчета */}
-      {timer !== null && (
-        <div style={{ fontSize: '96px', color: 'white', marginTop: '20px' }}>
-          Запись начнется через {timer}...
+        {timer !== null && <div className={styles.timer}>Запись начнется через {timer}...</div>}
+
+        <audio
+          ref={audioRef}
+          src="../../../public/song/minus/Девочка+пай+minus_out.mp3"
+          onTimeUpdate={handleTimeUpdate}
+          onEnded={handleEnded}
+          style={{ display: 'none' }}
+          controls={false}
+        />
+
+        <div className={styles.subtitlesContainer}>
+          {subtitles.map((subtitle, index) => {
+            const lines = subtitle.text.split('\n');
+
+            if (
+              index === currentSubtitleIndex ||
+              index === currentSubtitleIndex - 1 ||
+              index === currentSubtitleIndex + 1
+            ) {
+              return (
+                <div
+                  key={index}
+                  className={
+                    index === currentSubtitleIndex ? styles.subtitleActive : styles.subtitle
+                  }
+                >
+                  {lines.map((line, lineIndex) => (
+                    <div key={lineIndex}>
+                      {line.split(' ').map((word, wordIndex) => (
+                        <span
+                          key={wordIndex}
+                          className={
+                            currentSubtitleIndex === index && wordIndex === highlightedWordIndex
+                              ? styles.wordHighlighted
+                              : ''
+                          }
+                        >
+                          {`${word} `}
+                        </span>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              );
+            }
+            return null;
+          })}
         </div>
-      )}
 
-      {/* Аудиоплеер */}
-      <audio
-        ref={audioRef}
-        src="../../../public/song/minus/Девочка+пай+minus_out.mp3"
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={handleEnded} // Останавливаем запись и завершаем
-        style={{ display: 'none' }} // Скрываем стандартные элементы управления
-        controls={false} // Убираем возможность перематывать
-      />
-
-      {/* Субтитры */}
-      <div
-        style={{
-          color: 'white',
-          backgroundColor: 'black',
-          padding: '10px',
-        }}
-      >
-        {subtitles.map((subtitle, index) => {
-          const lines = subtitle.text.split('\n');
-
-          if (
-            index === currentSubtitleIndex ||
-            index === currentSubtitleIndex - 1 ||
-            index === currentSubtitleIndex + 1
-          ) {
-            return (
-              <div
-                key={index}
-                style={{
-                  color: index === currentSubtitleIndex ? 'white' : 'gray',
-                  fontSize: index === currentSubtitleIndex ? '96px' : '48px', // Крупнее для активной строки, меньше для соседних
-                  marginBottom: '10px',
-                }}
-              >
-                {lines.map((line, lineIndex) => (
-                  <div key={lineIndex} style={{ marginBottom: '5px' }}>
-                    {line.split(' ').map((word, wordIndex) => (
-                      <span
-                        key={wordIndex}
-                        style={{
-                          color:
-                            currentSubtitleIndex === index && wordIndex === highlightedWordIndex
-                              ? 'yellow'
-                              : 'inherit',
-                          // Добавляем неоновое свечение для выделенных слов
-                          textShadow:
-                            currentSubtitleIndex === index && wordIndex === highlightedWordIndex
-                              ? '0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFA500, 0 0 40px #FFA500'
-                              : 'none',
-                          fontWeight:
-                            currentSubtitleIndex === index && wordIndex === highlightedWordIndex
-                              ? 'bold'
-                              : 'normal',
-                        }}
-                      >
-                        {`${word} `}
-                      </span>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            );
-          }
-          return null;
-        })}
-      </div>
-
-      {/* Сообщение после завершения */}
-      {isFinished && (
-        <div style={{ fontSize: '64px', color: 'gold', marginTop: '20px' }}>
-          Да Вы просто звезда!
-        </div>
-      )}
+        {isFinished && <div className={styles.finishedMessage}>Да Вы просто звезда!</div>}
+      </Container>
+      <Button onClick={() => navigate(-1)} className={styles.buttonChangeSong}>
+        Сменить песню
+      </Button>
     </div>
   );
 }

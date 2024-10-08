@@ -1,0 +1,84 @@
+.pageContainer {
+  display: flex; /* Включаем flexbox */
+  flex-direction: column; /* Вертикальная ориентация */
+  align-items: center; /* Центрирование по горизонтали */
+  justify-content: center; /* Центрирование по вертикали */
+  height: 100vh; /* Занять всю высоту экрана */
+  text-align: center;
+  padding: 20px;
+  background-color: black; /* Добавить фон, если нужно */
+}
+
+.button {
+  padding: 20px 40px;
+  font-size: 24px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-shadow:
+    0 0 10px #00ff00,
+    0 0 20px #00ff00;
+  box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.7);
+  transition: background-color 0.3s ease;
+}
+
+.timer {
+  font-size: 96px;
+  color: white;
+  margin-top: 20px;
+}
+
+.subtitlesContainer {
+  color: white;
+  background-color: black;
+  padding: 10px;
+}
+
+.subtitle {
+  color: gray;
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.subtitleActive {
+  color: white;
+  font-size: 96px;
+}
+
+.wordHighlighted {
+  color: yellow;
+  text-shadow:
+    0 0 10px #ffd700,
+    0 0 20px #ffd700,
+    0 0 30px #ffa500,
+    0 0 40px #ffa500;
+  font-weight: bold;
+}
+
+.finishedMessage {
+  font-size: 64px;
+  color: gold;
+  margin-top: 20px;
+}
+
+.buttonChangeSong {
+  position: fixed; /* Закрепляем позицию */
+  bottom: 20px; /* Расположение от низа */
+  right: 20px; /* Расположение от правого края */
+  background-color: transparent; /* Прозрачный фон */
+  border: 2px solid white; /* Белая рамка */
+  color: white; /* Цвет текста */
+  padding: 10px 20px; /* Отступы для удобства */
+  cursor: pointer; /* Указатель при наведении */
+  border-radius: 5px; /* Закругленные углы */
+  font-size: 16px; /* Размер шрифта */
+  transition: background-color 0.3s; /* Плавный переход */
+  z-index: 10; /* Поднимаем кнопку выше других элементов */
+}
+
+.buttonChangeSong:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Легкое затемнение при наведении */
+}
+
