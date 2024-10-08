@@ -19,8 +19,8 @@ module.exports = {
       acapella: {
         type: Sequelize.STRING,
       },
-      text: {
-        type: Sequelize.TEXT,
+      subtitles: {
+        type: Sequelize.STRING,
       },
       img: {
         type: Sequelize.STRING,
