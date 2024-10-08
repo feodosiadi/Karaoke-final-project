@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../shared/lib/hooks';
 import { loginThunk } from '../../enteties/User/model/authThunk';
 import type { LoginForm } from '../../enteties/User/model/types';
+import { clearLoading, setLoading } from '../../enteties/User/model/authSlice';
 
 export default function SignInPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -69,6 +70,7 @@ export default function SignInPage(): JSX.Element {
             const formData = Object.fromEntries(new FormData(e.currentTarget));
             void dispatch(loginThunk(formData as LoginForm));
             navigate('/genres');
+            void dispatch(setLoading());
           }}
         >
           <TextInput
@@ -128,7 +130,7 @@ export default function SignInPage(): JSX.Element {
                 borderRadius: '2%', // Закругленные углы
               }}
               variant="gradient"
-              gradient={{ from: '#d3d3d3', to: '#a9a9a9', deg: 105 }} 
+              gradient={{ from: '#d3d3d3', to: '#a9a9a9', deg: 105 }}
               radius="lg"
               fullWidth
             >

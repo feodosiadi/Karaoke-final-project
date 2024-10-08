@@ -7,11 +7,13 @@ import { checkAuthThunk, loginThunk, logoutThunk, signUpThunk } from './authThun
 export type AuthState = {
   accessToken: string;
   user: UserT;
+  loading: boolean;
 };
 
 const initialState: AuthState = {
   accessToken: '',
   user: { status: UserStatus.Pending },
+  loading: false,
 };
 
 export const authSlice = createSlice({
@@ -25,16 +27,21 @@ export const authSlice = createSlice({
       state.accessToken = '';
       state.user = { status: UserStatus.Guest };
     },
+    setLoading: (state) => {
+      state.loading = true;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
         state.user = { ...action.payload.user, status: UserStatus.Logged };
+        state.loading = false;
       })
       .addCase(signUpThunk.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
         state.user = { ...action.payload.user, status: UserStatus.Logged };
+        state.loading = false;
       })
       .addCase(checkAuthThunk.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
@@ -50,6 +57,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAccessToken, clearAuth } = authSlice.actions;
+export const { setAccessToken, clearAuth, setLoading } = authSlice.actions;
 
 export default authSlice.reducer;

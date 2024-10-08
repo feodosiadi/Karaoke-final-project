@@ -22,4 +22,11 @@
 
 .casset {
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.cassetImg {
+  width: 250px;
 }
