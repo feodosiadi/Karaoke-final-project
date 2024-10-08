@@ -11,24 +11,27 @@ export default function NavBar(): JSX.Element {
   // const icon = <IconLogout size={14} />;
 
   return (
-    <div
-      className="nav-container"
-      style={{ backgroundColor: '#A9A9A9', padding: '10px', display: 'flex', alignItems: 'center' }}
-    >
-      <Text weight={700} size="xl" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
+    <div className="nav-container">
+      <Text
+        className="nav-title"
+        weight={700}
+        size="xl"
+        style={{ cursor: 'pointer' }}
+        onClick={() => navigate('/')}
+      >
         ШАНСООКЕ
       </Text>
 
-      <Group spacing="sm" style={{ marginLeft: 'auto' }}>
-        <Button variant="subtle" onClick={() => navigate('/genres')}>
+      <Group className='nav-buttons' spacing="sm">
+        <Button className="custom-button" variant="subtle" onClick={() => navigate('/genres')}>
           Жанры
         </Button>
-        <Button variant="subtle" onClick={() => navigate('/leaderboard')}>
+        <Button className="custom-button" variant="subtle" onClick={() => navigate('/leaderboard')}>
           Таблица лидеров
         </Button>
         <Button
+          className="custom-button logout-button"
           justify="center"
-          // rightSection={icon}
           variant="filled"
           color="red"
           onClick={() => void dispatch(logoutThunk())}

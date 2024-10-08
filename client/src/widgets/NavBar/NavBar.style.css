@@ -5,4 +5,50 @@
   min-height: 0;
   width: 100vw;
   z-index: 100;
+  background-color: transparent; /* Светло-серый фон */
+  padding: 10px; /* Отступы внутри контейнера */
+  display: flex; /* Гибкий контейнер для выравнивания содержимого */
+  align-items: center; /* Центровка элементов по вертикали */
+}
+
+.nav-title {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%); /* Точное выравнивание по центру экрана */
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 4%;
+  font-family: 'Train One', cursive;
+  text-shadow: 0 0 10px rgba(255, 240, 120, 0.8);
+}
+
+.nav-buttons {
+  position: absolute;
+  top: 3rem;
+  right: 1rem;
+}
+
+.custom-button {
+  background-color: transparent; /* Прозрачный фон */
+  border: 2px solid white; /* Белая граница */
+  color: white; /* Белый шрифт */
+  font-size: 1rem; /* Размер шрифта */
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease; /* Плавные переходы */
+}
+
+.custom-button:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Легкий фон при наведении */
+  color: white; /* Цвет шрифта при наведении */
+}
+
+.logout-button {
+  border-color: red; /* Красная граница для кнопки "Выйти" */
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 0, 0, 0.2); /* Красный фон при наведении */
+  color: red; /* Красный шрифт при наведении */
 }
