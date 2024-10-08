@@ -10,3 +10,8 @@ export const authSchema = z.object({
   user: userSchema,
   accessToken: z.string(),
 });
+
+export const userLeaderSchema = userSchema.pick({
+  name: true,
+  id: true,
+});

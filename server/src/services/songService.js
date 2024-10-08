@@ -26,15 +26,26 @@ class SongService {
     const data = await this.#models.Record.findAll({
       where: { songId },
       order: [['score', 'DESC']],
-      limit: 5
+      limit: 5,
     });
     return data;
   }
 
-  async getLeaderBoard () {
+  async getLeaderBoard() {
     const data = await this.#models.Record.findAll({
+      attributes: ['id', 'record', 'userId', 'songId', 'score'],
       order: [['score', 'DESC']],
-      limit: 10
+      limit: 10,
+      include: [
+        {
+          model: this.#models.User,
+          attributes: ['id', 'name'],
+        },
+        {
+          model: this.#models.Song,
+          attributes: ['id', 'name'],
+        },
+      ],
     });
     return data;
   }
