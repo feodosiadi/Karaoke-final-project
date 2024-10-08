@@ -193,6 +193,8 @@ songsRouter
 
       const recordFinal = await songService.postOnRecord(data);
 
+      console.log(recordFinal);
+
       return res.status(200).json(recordFinal);
     } catch (error) {
       console.error(error);
@@ -200,14 +202,13 @@ songsRouter
     }
   });
 
-songsRouter.route('/leaderboard/all/').get(async (req, res) => {
+songsRouter.route('/leaderboard/all').get(async (req, res) => {
   try {
     const leaderBoard = await songService.getLeaderBoard();
 
     if (!leaderBoard) {
       return res.status(400).json({ message: 'No leaders' });
     }
-
     return res.status(200).json(leaderBoard);
   } catch (error) {
     console.error(error);

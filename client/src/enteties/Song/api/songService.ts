@@ -2,7 +2,7 @@ import type { AxiosInstance } from 'axios';
 import { ZodError } from 'zod';
 import type { SongType } from '../model/types';
 import axiosInstance from '../../../shared/api/axiosInstance';
-import songSchema from '../model/schema';
+import { songSchema } from '../model/schema';
 
 class SongService {
   constructor(private readonly client: AxiosInstance) {}

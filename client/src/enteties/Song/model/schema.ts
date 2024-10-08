@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const songSchema = z.object({
+export const songSchema = z.object({
   id: z.number(),
   genreId: z.number(),
   name: z.string(),
@@ -10,4 +10,7 @@ const songSchema = z.object({
   img: z.string(),
 });
 
-export default songSchema;
+export const songLeaderSchema = songSchema.pick({
+  id: true,
+  name: true,
+});
