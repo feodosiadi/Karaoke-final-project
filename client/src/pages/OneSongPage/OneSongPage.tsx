@@ -5,7 +5,7 @@ import { Button, Container } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { getOneSongThunk } from '../../enteties/Song/model/songThunk';
-import { postOneRecordThunk } from '../../enteties/Record/model/recordThunk';
+import postOneRecordThunk from '../../enteties/Record/model/recordThunk';
 import styles from './OneSongPage.module.css';
 import NavBar from '../../widgets/NavBar/NavBar';
 import { clearRecord } from '../../enteties/Record/model/recordSlice';
@@ -16,14 +16,14 @@ export default function OneSongPage(): JSX.Element {
   const params = useParams();
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState<string | null>(null);
-  const [isFinished, setIsFinished] = useState(false); 
+  const [isFinished, setIsFinished] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
   const navigate = useNavigate();
   const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
-  const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState<number>(-1); 
-  const [highlightedWordIndex, setHighlightedWordIndex] = useState<number>(-1); 
-  const [isPlaying, setIsPlaying] = useState<boolean>(false); 
+  const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState<number>(-1);
+  const [highlightedWordIndex, setHighlightedWordIndex] = useState<number>(-1);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [timer, setTimer] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const score = useAppSelector((store) => store.record.record?.score);
@@ -40,7 +40,7 @@ export default function OneSongPage(): JSX.Element {
 
       mediaRecorder.start();
       setIsRecording(true);
-      audioChunks.current = []; 
+      audioChunks.current = [];
 
       mediaRecorder.ondataavailable = (event) => {
         audioChunks.current.push(event.data);
@@ -51,7 +51,7 @@ export default function OneSongPage(): JSX.Element {
         setAudioURL(URL.createObjectURL(audioBlob));
 
         const formData = new FormData();
-        formData.append('record', audioBlob, 'recording.wav'); 
+        formData.append('record', audioBlob, 'recording.wav');
 
         console.log('Отправка новой записи:', audioBlob);
         void dispatch(postOneRecordThunk({ id: Number(params.songId), data: formData }));
@@ -86,38 +86,37 @@ export default function OneSongPage(): JSX.Element {
       .split('\n\n')
       .map((block) => {
         const lines = block.split('\n');
-        if (lines.length < 2) return null; 
+        if (lines.length < 2) return null;
 
         const times = lines[1]?.split(' --> ');
-        if (!times || times.length < 2) return null; 
+        if (!times || times.length < 2) return null;
 
         const startTime = parseTime(times[0]);
         const endTime = parseTime(times[1]);
-        const text = lines.slice(2).join('\n'); 
+        const text = lines.slice(2).join('\n');
         return { startTime, endTime, text };
       })
-      .filter(Boolean) as Subtitle[]; 
-  }, []); 
+      .filter(Boolean) as Subtitle[];
+  }, []);
   const handlePlay = async (): Promise<void> => {
     setTimer(3);
 
     const countdown = setInterval(async () => {
       setTimer((prevTimer) => {
         if (prevTimer !== null && prevTimer > 0) {
-          return prevTimer - 1; 
+          return prevTimer - 1;
         }
         clearInterval(countdown);
-        setTimer(null); 
+        setTimer(null);
 
         if (audioRef.current) {
           audioRef.current
             .play()
             .then(async () => {
-             
-              setIsPlaying(true); 
+              setIsPlaying(true);
               setIsFinished(false);
-             
-              await startRecording(); 
+
+              await startRecording();
               dispatch(clearRecord());
             })
             .catch((playError) => {
@@ -132,7 +131,7 @@ export default function OneSongPage(): JSX.Element {
   const handleRestart = async (): Promise<void> => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      await audioRef.current.play(); 
+      await audioRef.current.play();
       setIsFinished(false);
       await startRecording();
       dispatch(clearRecord());
@@ -149,7 +148,6 @@ export default function OneSongPage(): JSX.Element {
       if (activeSubtitleIndex !== -1) {
         setCurrentSubtitleIndex(activeSubtitleIndex);
 
-        
         const activeSubtitle = subtitles[activeSubtitleIndex];
         const words = activeSubtitle.text.split(' ');
         const timePerWord = (activeSubtitle.endTime - activeSubtitle.startTime) / words.length;
@@ -157,15 +155,14 @@ export default function OneSongPage(): JSX.Element {
 
         setHighlightedWordIndex(wordIndex);
       } else {
-        setCurrentSubtitleIndex(-1); 
+        setCurrentSubtitleIndex(-1);
       }
     }
   };
 
- 
   const handleEnded = (): void => {
-    stopRecording(); 
-    setIsPlaying(false); 
+    stopRecording();
+    setIsPlaying(false);
     setIsFinished(true);
   };
 
@@ -205,8 +202,6 @@ export default function OneSongPage(): JSX.Element {
     <div className={styles.pageContainer}>
       <NavBar />
       <Container>
-        <h1>{oneSong?.name} - Караоке</h1>
-
         {!isPlaying && !timer && !isFinished && (
           <button onClick={() => void handlePlay()} type="button" className={styles.button}>
             Начать запись
@@ -214,7 +209,7 @@ export default function OneSongPage(): JSX.Element {
         )}
 
         {isPlaying && !isFinished && (
-          <button onClick={() => void handleRestart()} type="button" className={styles.button}>
+          <button onClick={() => void handleRestart()} type="button" className={styles.buttonReset}>
             Записать заново
           </button>
         )}
@@ -270,7 +265,7 @@ export default function OneSongPage(): JSX.Element {
         </div>
 
         {isFinished && score && (
-          <div className={styles.finishedMessage}>Да Вы просто звезда! Ваш счёт – {score} </div>
+          <div className={styles.finishedMessage}>Да Вы просто звезда! <br /> Ваши баллы: {score} </div>
         )}
 
         {isFinished && !score && (

@@ -1,8 +1,8 @@
 .pageContainer {
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
-  justify-content: center; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
   text-align: center;
   padding: 20px;
@@ -12,15 +12,30 @@
 .button {
   padding: 20px 40px;
   font-size: 24px;
-  background-color: green;
+  background-color: red;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   text-shadow:
-    0 0 10px #00ff00,
-    0 0 20px #00ff00;
-  box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.7);
+    0 0 10px #ff0000,
+    0 0 20px #ff0000;
+  box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.7);
+  transition: background-color 0.3s ease;
+}
+
+.buttonReset {
+  padding: 20px 40px;
+  font-size: 24px;
+  background-color: rgba(255, 208, 0, 0.896);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-shadow:
+    0 0 10px #f6de6b,
+    0 0 20px #f6de6b;
+  box-shadow: 0 0 10px 5px rgba(255, 247, 2, 0.7);
   transition: background-color 0.3s ease;
 }
 
@@ -38,13 +53,13 @@
 
 .subtitle {
   color: gray;
-  font-size: 48px;
+  font-size: 40px;
   margin-bottom: 10px;
 }
 
 .subtitleActive {
   color: white;
-  font-size: 96px;
+  font-size: 75px;
 }
 
 .wordHighlighted {
@@ -64,21 +79,20 @@
 }
 
 .buttonChangeSong {
-  position: fixed; 
-  bottom: 20px; 
-  right: 20px; 
-  background-color: transparent; 
-  border: 2px solid white; 
-  color: white; 
-  padding: 10px 20px; 
-  cursor: pointer; 
-  border-radius: 5px; 
-  font-size: 16px; 
-  transition: background-color 0.3s; 
-  z-index: 10; 
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  z-index: 10;
 }
 
 .buttonChangeSong:hover {
-  background-color: rgba(255, 255, 255, 0.1); 
+  background-color: rgba(255, 255, 255, 0.1);
 }
-

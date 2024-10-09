@@ -1,24 +1,19 @@
-let mediaRecorder ;
-let audioChunks = [];
+let mediaRecorder: MediaRecorder;
+let audioChunks: Blob[] = [];
 
-// Получаем доступ к микрофону
 navigator.mediaDevices
   .getUserMedia({ audio: true })
-  .then((stream) => {
-    // Создаём MediaRecorder для записи аудио
+  .then((stream: MediaStream) => {
     mediaRecorder = new MediaRecorder(stream);
 
-    // Событие при получении данных
-    mediaRecorder.ondataavailable = (event) => {
+    mediaRecorder.ondataavailable = (event: BlobEvent) => {
       audioChunks.push(event.data);
     };
 
-    // Событие завершения записи
     mediaRecorder.onstop = () => {
       const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
       audioChunks = [];
 
-      // Создаем ссылку для скачивания файла
       const audioUrl = URL.createObjectURL(audioBlob);
       const a = document.createElement('a');
       a.href = audioUrl;
@@ -28,18 +23,17 @@ navigator.mediaDevices
       document.body.removeChild(a);
     };
   })
-  .catch((error) => {
+  .catch((error: Error) => {
     console.error('Ошибка доступа к микрофону: ', error);
   });
 
-// Функции для управления записью
-function startRecording() {
+function startRecording(): void {
   audioChunks = [];
   mediaRecorder.start();
   console.log('Начата запись...');
 }
 
-function stopRecording() {
+function stopRecording(): void {
   mediaRecorder.stop();
   console.log('Запись остановлена.');
 }

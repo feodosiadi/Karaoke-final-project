@@ -2,9 +2,8 @@ import type { AxiosInstance } from 'axios';
 import { ZodError } from 'zod';
 import axiosInstance from '../../../shared/api/axiosInstance';
 import type { RecordType } from '../model/type';
-import { AudioFileType } from '../model/type';
 import { recordSchema } from '../model/schema';
-import { SongType } from '../../Song/model/types';
+import type { SongType } from '../../Song/model/types';
 
 class RecordService {
   constructor(private client: AxiosInstance) {}

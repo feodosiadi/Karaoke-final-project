@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { postOneRecordThunk } from './recordThunk';
+import postOneRecordThunk from './recordThunk';
 import type { RecordType } from './type';
 
 export type RecordState = {
