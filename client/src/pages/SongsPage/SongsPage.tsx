@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
-import { Container, Grid } from '@mantine/core';
+import { Container } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { getAllSongsByGenreThunk } from '../../enteties/Song/model/songThunk';
@@ -16,6 +18,9 @@ export default function SongsPage(): JSX.Element {
   const { genreId } = useParams();
   const navigate = useNavigate();
   const [audio] = useState(new Audio());
+  const imagePaths = ['/ads/avito.jpg', '/ads/curds.jpg', '/ads/pizza.jpg'];
+
+  const [isImageVisible, setIsImageVisible] = useState(true);
 
   useEffect(() => {
     void dispatch(getAllSongsByGenreThunk(Number(genreId)));
@@ -35,6 +40,13 @@ export default function SongsPage(): JSX.Element {
       });
   };
 
+  const handleImageClick = (): void => {
+    setIsImageVisible(false);
+    setTimeout(() => {
+      setIsImageVisible(true);
+    }, 3000);
+  };
+
   if (error) {
     return <ErrorPage />;
   }
@@ -43,7 +55,19 @@ export default function SongsPage(): JSX.Element {
     <div className={styles.pageContainer}>
       <NavBar />
       <Container className={styles.contentContainer}>
-        <Slider songsByGenre={songsByGenre} handlePlaySongAndNavigate={handlePlaySongAndNavigate}/>
+        <Slider songsByGenre={songsByGenre} handlePlaySongAndNavigate={handlePlaySongAndNavigate} />
+        {songsByGenre[0]?.Genre?.name === 'Всякое' && (
+          <div className={styles.bottomContainer}>
+            {isImageVisible && (
+              <img
+                className={styles.ads}
+                src={`/public/${imagePaths[Math.floor(Math.random() * imagePaths.length)]}`}
+                alt="ads"
+                onClick={handleImageClick}
+              />
+            )}
+          </div>
+        )}
       </Container>
     </div>
   );
