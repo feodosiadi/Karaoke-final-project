@@ -4,64 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../shared/lib/hooks';
 import { loginThunk } from '../../enteties/User/model/authThunk';
 import type { LoginForm } from '../../enteties/User/model/types';
-import { clearLoading, setLoading } from '../../enteties/User/model/authSlice';
+import { setLoading } from '../../enteties/User/model/authSlice';
+import styles from './SignInPage.module.css'; // Импорт модуля CSS
 
 export default function SignInPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const lampStyle = {
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    height: '25%',
-    backgroundImage: 'url(../../RegLamps.png)',
-    backgroundRepeat: 'repeat-x',
-    backgroundSize: 'contain',
-    filter: 'brightness(var(--brightness))',
-    transition: 'filter 0.3s ease',
-  };
-
-  const bottomLampStyle = {
-    ...lampStyle,
-    top: 'unset',
-    bottom: 0,
-    transform: 'scaleY(-1)', // Отражаем лампочки по вертикали
-  };
-
-  const containerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    position: 'relative',
-    backgroundColor: 'black', // Добавляем черный фон для страницы
-    color: 'white', // Белый цвет текста
-  };
-
   return (
-    <div style={containerStyle}>
-      {/* Элемент с лампочками на фоне */}
-      <div style={lampStyle} />
+    <div className={styles.container}>
+      <div className={styles.lampStyle} />
 
-      {/* Центральная секция с формой */}
-      <Box
-        maw="50%" // Ширина формы относительно родителя
-        mx="auto"
-        className="center-text glowing-box"
-        sx={(theme) => ({
-          padding: theme.spacing.xl * 2, // Увеличиваем padding в 2 раза
-          backgroundColor: theme.colors.dark[7],
-          borderRadius: '5%', // Закругляем углы формы в процентах
-          boxShadow: `0 0 5% 1% rgba(255, 255, 255, 0.8)`, // Свечение в процентах
-          border: '0.5% solid white', // Белая рамка
-          zIndex: 1, // Чтобы форма отображалась поверх фона с лампочками
-          textAlign: 'center',
-          position: 'relative', // Для правильного позиционирования
-        })}
-      >
-        <Title order={1} sx={{ marginBottom: '4%', color: 'white', fontSize: '2rem' }}>
+      <Box className={styles.glowingBox}>
+        <Title order={1} className={styles.centerText}>
           Войти
         </Title>
         <form
@@ -77,41 +32,21 @@ export default function SignInPage(): JSX.Element {
             placeholder="Email"
             name="email"
             size="lg"
-            sx={{
-              height: '10%', // Высота инпута
-              fontSize: '1.5rem', // Размер текста
-              borderRadius: '2%', // Закругленные углы в процентах
-              marginBottom: '4%',
-            }}
-            className="input-style"
+            className={styles.inputStyle}
           />
           <PasswordInput
             placeholder="Пароль"
             name="password"
             mt="md"
             size="lg"
-            sx={{
-              height: '10%', // Высота инпута
-              fontSize: '1.5rem', // Размер текста
-              borderRadius: '2%', // Закругленные углы в процентах
-              marginBottom: '4%',
-            }}
-            className="input-style"
+            className={styles.inputStyle}
           />
 
           <Group mt="md" justify="center" align="center">
             <Button
               type="submit"
-              size="xl" // Увеличиваем кнопку
-              sx={{
-                display: 'block', // Явно указываем кнопке быть блочным элементом
-                height: '10vh', // Используем vh для более явного управления высотой
-                fontSize: '1.5rem', // Размер текста на кнопке
-                borderRadius: '2%', // Закругленные углы
-              }}
-              variant="gradient"
-              gradient={{ from: '#ffcc00', to: '#ff9900', deg: 105 }}
-              radius="lg"
+              size="xl"
+              className={styles.buttonPrimary}
               fullWidth
             >
               Войти
@@ -120,18 +55,9 @@ export default function SignInPage(): JSX.Element {
 
           <Group mt="md" justify="center" align="center">
             <Button
-              type="submit"
               onClick={() => navigate('/')}
-              size="xl" // Увеличиваем кнопку
-              sx={{
-                display: 'block', // Явно указываем кнопке быть блочным элементом
-                height: '10vh', // Используем vh для более явного управления высотой
-                fontSize: '1.5rem', // Размер текста на кнопке
-                borderRadius: '2%', // Закругленные углы
-              }}
-              variant="gradient"
-              gradient={{ from: '#d3d3d3', to: '#a9a9a9', deg: 105 }}
-              radius="lg"
+              size="xl"
+              className={styles.buttonSecondary}
               fullWidth
             >
               На главную
@@ -140,8 +66,7 @@ export default function SignInPage(): JSX.Element {
         </form>
       </Box>
 
-      {/* Лампочки внизу страницы */}
-      <div style={bottomLampStyle} />
+      <div className={styles.bottomLampStyle} />
     </div>
   );
 }

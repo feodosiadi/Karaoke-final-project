@@ -3,7 +3,7 @@ import { Button, TextInput, PasswordInput, Group, Box, Title } from '@mantine/co
 import { useAppDispatch } from '../../shared/lib/hooks';
 import { signUpThunk } from '../../enteties/User/model/authThunk';
 import type { SignUpForm } from '../../enteties/User/model/types';
-import './SignUpPage.style.css'; // Подключаем файл со стилями
+import styles from './SignUpPage.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setLoading } from '../../enteties/User/model/authSlice';
@@ -15,7 +15,7 @@ export default function SignUpPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const signUpHandler = (e) => {
+  const signUpHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (passOne !== passSec) {
       setError('Пароли не совпадают');
@@ -28,92 +28,56 @@ export default function SignUpPage(): JSX.Element {
   };
 
   return (
-    <Box className="container">
-      <Box className="glowing-box" maw={400} mx="auto" p={30}>
-        <Title order={2} align="center" className="center-text">
+    <div className={styles.container}>
+      <div className={styles.lampStyle} />
+
+      <Box className={styles.glowingBox}>
+        <Title order={2} className={styles.centerText}>
           Регистрация
         </Title>
-        <form onSubmit={(e) => signUpHandler(e)}>
-          <TextInput
-            label="Email"
-            placeholder="Email"
-            name="email"
-            className="input-style"
-            required
-          />
+        <form onSubmit={signUpHandler}>
+          <TextInput placeholder="Email" name="email" className={styles.inputStyle} size="lg" />
 
-          <TextInput label="Имя" placeholder="Имя" name="name" className="input-style" required />
+          <TextInput placeholder="Имя" name="name" className={styles.inputStyle} size="lg" />
 
           <PasswordInput
-            label="Пароль"
             placeholder="Пароль"
             name="password"
-            mt="md"
-            className="input-style"
+            className={styles.inputStyle}
+            size="lg"
             onChange={(e) => setPassOne(e.currentTarget.value)}
-            required
           />
 
           <PasswordInput
-            label="Повторить пароль"
-            placeholder="Пароль"
-            mt="md"
-            className="input-style"
+            placeholder="Подтвердите пароль"
+            className={styles.inputStyle}
+            size="lg"
             onChange={(e) => {
               setPassSec(e.currentTarget.value);
               if (passOne !== e.currentTarget.value) {
                 setError('Пароли не совпадают');
-              } else if (passSec.length === 0) {
-                setError('');
-              } else if (passOne.length === 0) {
-                setError('');
               } else {
                 setError('');
               }
             }}
             error={error}
-            required
           />
 
-          <Group mt="md" justify="center" align="center">
-            <Button
-              type="submit"
-              size="xl" // Увеличиваем кнопку
-              sx={{
-                display: 'block', // Явно указываем кнопке быть блочным элементом
-                height: '10vh', // Используем vh для более явного управления высотой
-                fontSize: '1.5rem', // Размер текста на кнопке
-                borderRadius: '2%', // Закругленные углы
-              }}
-              variant="gradient"
-              gradient={{ from: '#ffcc00', to: '#ff9900', deg: 105 }}
-              radius="lg"
-              fullWidth
-            >
+          <Group mt="md">
+            <Button type="submit" className={styles.buttonPrimary} fullWidth>
               Регистрация
             </Button>
           </Group>
-          <Group mt="md" justify="center" align="center">
-            <Button
-              type="submit"
-              onClick={() => navigate('/')}
-              size="xl" // Увеличиваем кнопку
-              sx={{
-                display: 'block', // Явно указываем кнопке быть блочным элементом
-                height: '10vh', // Используем vh для более явного управления высотой
-                fontSize: '1.5rem', // Размер текста на кнопке
-                borderRadius: '2%', // Закругленные углы
-              }}
-              variant="gradient"
-              gradient={{ from: '#d3d3d3', to: '#a9a9a9', deg: 105 }}
-              radius="lg"
-              fullWidth
-            >
+
+          <Group mt="md">
+            <Button className={styles.buttonSecondary} onClick={() => navigate('/')} fullWidth>
               На главную
             </Button>
           </Group>
         </form>
       </Box>
-    </Box>
+
+      <div className={styles.bottomLampStyle} />
+    </div>
   );
 }

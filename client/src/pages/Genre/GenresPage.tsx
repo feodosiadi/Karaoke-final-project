@@ -5,7 +5,6 @@ import NavBar from '../../widgets/NavBar/NavBar';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { getAllGenresThunk } from '../../enteties/Genre/model/genreThunk';
 import './GenresPage.style.css';
-import { clearLoading } from '../../enteties/User/model/authSlice';
 
 export default function GenresPage(): JSX.Element {
   const genres = useAppSelector((store) => store.songs.genre);
