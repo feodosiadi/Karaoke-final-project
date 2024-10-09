@@ -54,3 +54,11 @@
 .adsHidden {
   display: none;
 }
+
+
+@media (min-width: 1650px) {
+  .bottomContainer {
+    width: 650px; 
+    height: 250px; 
+  }
+}
