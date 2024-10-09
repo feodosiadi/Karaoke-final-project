@@ -4,7 +4,6 @@ const fs = require('fs').promises;
 const path = require('path');
 const Meyda = require('meyda');
 const verifyAccessToken = require('../middlewares/verifyAccessToken');
-const { log } = require('console');
 
 const songsRouter = require('express').Router();
 
