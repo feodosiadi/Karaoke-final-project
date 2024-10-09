@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+  background-color: black; /* Темный фон страницы */
+  color: white; /* Белый цвет текста */
+}
+
+.lampStyle {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 19%;
+  background-image: url('../../RegLamps.png');
+  background-repeat: repeat-x;
+  background-size: contain;
+  filter: brightness(var(--brightness));
+  transition: filter 0.3s ease;
+}
+
+.bottomLampStyle {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 19%;
+  background-image: url('../../RegLamps.png');
+  background-repeat: repeat-x;
+  background-size: contain;
+  filter: brightness(var(--brightness));
+  transition: filter 0.3s ease;
+  transform: scaleY(-1); /* Отражаем лампы по вертикали */
+}
+
+.glowingBox {
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px 5px rgba(226, 189, 94, 0.6);
+  transition: box-shadow 0.3s ease;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.glowingBox:hover {
+  box-shadow: 0 0 30px 10px rgba(255, 220, 131, 0.9);
+}
+
+.centerText {
+  text-align: center;
+  color: #fff; /* Цвет текста заголовка */
+}
+
+.inputStyle {
+  width: 100%;
+  height: 10%; /* Высота инпута */
+  font-size: 1.5rem; /* Размер текста */
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 2%; /* Скругленные углы */
+  margin-bottom: 4%;
+  padding: 10px;
+}
+
+.buttonPrimary {
+  display: block;
+  width: 100%;
+  height: 8vh; /* Высота кнопки */
+  font-size: 1.5rem;
+  border-radius: 15px;
+  background: linear-gradient(105deg, #ffcc00, #ff9900);
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.buttonSecondary {
+  display: block;
+  width: 100%;
+  height: 8vh;
+  font-size: 1.5rem;
+  border-radius: 15px;
+  background: linear-gradient(105deg, #d3d3d3, #a9a9a9);
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease;
+}
