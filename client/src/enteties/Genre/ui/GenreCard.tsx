@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
+import { Card, Image, Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import type { GenreT } from '../model/types';
 
@@ -13,8 +13,13 @@ export default function GenreCard({ genre }: GenreCardType): JSX.Element {
   const navigate = useNavigate();
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Card.Section style={{marginBottom: 10}}>
-        <Image src={`/public/${genre.img}`} height={160} style={{borderBottomLeftRadius: 10, borderBottomRightRadius: 10}} alt="Norway" />
+      <Card.Section style={{ marginBottom: 10 }}>
+        <Image
+          src={`/public/${genre.img}`}
+          height={160}
+          style={{ borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
+          alt="Norway"
+        />
       </Card.Section>
       <Button
         variant="filled"

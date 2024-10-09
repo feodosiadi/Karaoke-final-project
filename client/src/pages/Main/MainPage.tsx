@@ -2,7 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Group, Grid, Container, Title, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import './MainPage.style.css';
+import styles from './MainPage.module.css'; // Импортируем модульные стили
 
 export default function MainPage(): JSX.Element {
   const navigate = useNavigate();
@@ -32,34 +32,32 @@ export default function MainPage(): JSX.Element {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <div
-        className="lights"
-        style={
-          {
-            '--brightness': brightness,
-          } as React.CSSProperties
-        }
+        className={styles.lights}
+        style={{
+          '--brightness': brightness,
+        } as React.CSSProperties}
       />
 
-      <div className="text-container">
+      <div className={styles.textContainer}>
         <Container size="lg">
           <Grid justify="center" align="center" gutter="lg">
-            <Grid.Col span={6} className="center-text" onClick={() => void playMusic()}>
+            <Grid.Col span={6} className={styles.centerText} onClick={() => void playMusic()}>
               <img
                 src="../../../public/img/Plastinka.PNG"
                 alt="Spinning Vinyl"
-                className="spinning-vinyl"
+                className={styles.spinningVinyl}
               />
             </Grid.Col>
 
             <Grid.Col span={10}>
-              <div className="center-text">
-                <Title order={1} className="title-main">
+              <div className={styles.centerText}>
+                <Title order={1} className={styles.titleMain}>
                   ШАНСООКЕ
                 </Title>
 
-                <Text size="lg" className="text-description">
+                <Text size="lg" className={styles.textDescription}>
                   Добро пожаловать в наш караоке-клуб! 🎤
                   <br />
                   Здесь вы можете исполнить свои любимые песни и посоревноваться с друзьями! 🏆
@@ -73,7 +71,7 @@ export default function MainPage(): JSX.Element {
                     variant="gradient"
                     gradient={{ from: '#ffcc00', to: '#ff9900', deg: 105 }}
                     radius="lg"
-                    className="button-primary"
+                    className={styles.buttonPrimary}
                   >
                     Войти
                   </Button>
@@ -84,7 +82,7 @@ export default function MainPage(): JSX.Element {
                     variant="gradient"
                     gradient={{ from: '#ffcc00', to: '#ff9900', deg: 105 }}
                     radius="lg"
-                    className="button-secondary"
+                    className={styles.buttonSecondary}
                   >
                     Зарегистрироваться
                   </Button>
@@ -95,9 +93,9 @@ export default function MainPage(): JSX.Element {
         </Container>
       </div>
 
-      <button onClick={toggleBrightness} className="fixed-button" type="button">
+      <button onClick={toggleBrightness} className={styles.fixedButton} type="button">
         <img
-          className="fixed-button"
+          className={styles.fixedButton}
           src={brightness === 1 ? '../../public/img/toggleOn.png' : '../../public/img/toggleOf.png'}
           alt={brightness === 1 ? 'Выключить свет' : 'Включить свет'}
         />

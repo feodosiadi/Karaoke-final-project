@@ -7,6 +7,7 @@ import NavBar from '../../widgets/NavBar/NavBar';
 import styles from './SongsPage.module.css';
 import type { SongType } from '../../enteties/Song/model/types';
 import ErrorPage from '../Error/ErrorPage';
+import Slider from '../../widgets/slider/slider';
 
 export default function SongsPage(): JSX.Element {
   const songsByGenre = useAppSelector((store) => store.songs.songsByGenre);
@@ -15,14 +16,13 @@ export default function SongsPage(): JSX.Element {
   const { genreId } = useParams();
   const navigate = useNavigate();
   const [audio] = useState(new Audio());
-  console.log(error);
 
   useEffect(() => {
     void dispatch(getAllSongsByGenreThunk(Number(genreId)));
   }, [dispatch, genreId]);
 
   const handlePlaySongAndNavigate = (songId: SongType['id']): void => {
-    audio.src = '../../../public/songsPage/insert-casset.mp3';
+    audio.src = '/public/songsPage/insert-casset.mp3';
     audio
       .play()
       .then(() => {
@@ -43,17 +43,7 @@ export default function SongsPage(): JSX.Element {
     <div className={styles.pageContainer}>
       <NavBar />
       <Container className={styles.contentContainer}>
-        {songsByGenre.map((song) => (
-          <Grid key={song.id} className={styles.gridItem}>
-            <button
-              className={styles.casset}
-              type="button"
-              onClick={() => handlePlaySongAndNavigate(song.id)}
-            >
-              <img className={styles.cassetImg} src={`/public/${song.img}`} alt={song.name} />
-            </button>
-          </Grid>
-        ))}
+        <Slider songsByGenre={songsByGenre} handlePlaySongAndNavigate={handlePlaySongAndNavigate}/>
       </Container>
     </div>
   );

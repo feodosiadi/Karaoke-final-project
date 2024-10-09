@@ -5,40 +5,11 @@ import { useAppDispatch } from '../../shared/lib/hooks';
 import { loginThunk } from '../../enteties/User/model/authThunk';
 import type { LoginForm } from '../../enteties/User/model/types';
 import { setLoading } from '../../enteties/User/model/authSlice';
-import styles from './SignInPage.module.css'; // Импорт модуля CSS
+import styles from './SignInPage.module.css';
+
 export default function SignInPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const lampStyle = {
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    height: '25%',
-    backgroundImage: 'url(../../RegLamps.png)',
-    backgroundRepeat: 'repeat-x',
-    backgroundSize: 'contain',
-    filter: 'brightness(var(--brightness))',
-    transition: 'filter 0.3s ease',
-  };
-
-  const bottomLampStyle = {
-    ...lampStyle,
-    top: 'unset',
-    bottom: 0,
-    transform: 'scaleY(-1)', 
-  };
-
-  const containerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    position: 'relative',
-    backgroundColor: 'black',
-    color: 'white', 
-  };
 
   return (
     <div className={styles.container}>
@@ -54,15 +25,11 @@ export default function SignInPage(): JSX.Element {
             const formData = Object.fromEntries(new FormData(e.currentTarget));
             void dispatch(loginThunk(formData as LoginForm));
             navigate('/genres');
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             void dispatch(setLoading());
           }}
         >
-          <TextInput
-            placeholder="Email"
-            name="email"
-            size="lg"
-            className={styles.inputStyle}
-          />
+          <TextInput placeholder="Email" name="email" size="lg" className={styles.inputStyle} />
           <PasswordInput
             placeholder="Пароль"
             name="password"
@@ -72,12 +39,7 @@ export default function SignInPage(): JSX.Element {
           />
 
           <Group mt="md" justify="center" align="center">
-            <Button
-              type="submit"
-              size="xl"
-              className={styles.buttonPrimary}
-              fullWidth
-            >
+            <Button type="submit" size="xl" className={styles.buttonPrimary} fullWidth>
               Войти
             </Button>
           </Group>
