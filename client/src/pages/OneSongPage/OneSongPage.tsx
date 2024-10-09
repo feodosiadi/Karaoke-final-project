@@ -16,15 +16,15 @@ export default function OneSongPage(): JSX.Element {
   const params = useParams();
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState<string | null>(null);
-  const [isFinished, setIsFinished] = useState(false); // Состояние для завершения аудио
+  const [isFinished, setIsFinished] = useState(false); 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
   const navigate = useNavigate();
   const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
-  const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState<number>(-1); // Индекс текущего субтитра
-  const [highlightedWordIndex, setHighlightedWordIndex] = useState<number>(-1); // Индекс слова, которое поётся сейчас
-  const [isPlaying, setIsPlaying] = useState<boolean>(false); // Состояние для отслеживания воспроизведения
-  const [timer, setTimer] = useState<number | null>(null); // Для отсчета времени
+  const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState<number>(-1); 
+  const [highlightedWordIndex, setHighlightedWordIndex] = useState<number>(-1); 
+  const [isPlaying, setIsPlaying] = useState<boolean>(false); 
+  const [timer, setTimer] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const score = useAppSelector((store) => store.record.record?.score);
   const oneSong = useAppSelector((store) => store.songs.oneSong);
@@ -32,7 +32,6 @@ export default function OneSongPage(): JSX.Element {
 
   console.log(isRecording, audioURL);
 
-  // Начало записи
   const startRecording = async (): Promise<void> => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -41,7 +40,7 @@ export default function OneSongPage(): JSX.Element {
 
       mediaRecorder.start();
       setIsRecording(true);
-      audioChunks.current = []; // Очистим старые данные перед началом новой записи
+      audioChunks.current = []; 
 
       mediaRecorder.ondataavailable = (event) => {
         audioChunks.current.push(event.data);
@@ -52,9 +51,8 @@ export default function OneSongPage(): JSX.Element {
         setAudioURL(URL.createObjectURL(audioBlob));
 
         const formData = new FormData();
-        formData.append('record', audioBlob, 'recording.wav'); // Добавляем Blob и указываем имя файла
+        formData.append('record', audioBlob, 'recording.wav'); 
 
-        // Отправляем данные через thunk
         console.log('Отправка новой записи:', audioBlob);
         void dispatch(postOneRecordThunk({ id: Number(params.songId), data: formData }));
       };
@@ -63,7 +61,6 @@ export default function OneSongPage(): JSX.Element {
     }
   };
 
-  // Остановка записи
   const stopRecording = (): void => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
@@ -84,47 +81,43 @@ export default function OneSongPage(): JSX.Element {
   };
 
   const parseSRT = useCallback((srtText: string): Subtitle[] => {
-    console.log('Текст субтитров:', srtText); // Отладочный вывод для проверки
+    console.log('Текст субтитров:', srtText);
     return srtText
       .split('\n\n')
       .map((block) => {
         const lines = block.split('\n');
-        if (lines.length < 2) return null; // Проверка на количество строк в блоке
+        if (lines.length < 2) return null; 
 
         const times = lines[1]?.split(' --> ');
-        if (!times || times.length < 2) return null; // Если формат неверный, пропускаем блок
+        if (!times || times.length < 2) return null; 
 
         const startTime = parseTime(times[0]);
         const endTime = parseTime(times[1]);
-        const text = lines.slice(2).join('\n'); // Оставляем переносы строк
+        const text = lines.slice(2).join('\n'); 
         return { startTime, endTime, text };
       })
-      .filter(Boolean) as Subtitle[]; // Фильтруем null значения и приводим тип
-  }, []); // Укажите зависимости, если нужно
-
+      .filter(Boolean) as Subtitle[]; 
+  }, []); 
   const handlePlay = async (): Promise<void> => {
-    // Запускаем таймер обратного отсчета
-    setTimer(3); // Таймер отсчета
+    setTimer(3);
 
     const countdown = setInterval(async () => {
       setTimer((prevTimer) => {
         if (prevTimer !== null && prevTimer > 0) {
-          return prevTimer - 1; // Уменьшаем таймер каждую секунду
+          return prevTimer - 1; 
         }
-        clearInterval(countdown); // Останавливаем таймер, когда он доходит до 0
-        setTimer(null); // Сбрасываем таймер
+        clearInterval(countdown);
+        setTimer(null); 
 
         if (audioRef.current) {
-          // Начинаем проигрывание песни
           audioRef.current
             .play()
             .then(async () => {
-              // Здесь добавляем async
-              setIsPlaying(true); // Отмечаем, что песня началась
-              setIsFinished(false); // Сбрасываем завершение
-
-              // Ожидаем завершения записи
-              await startRecording(); // Начало записи
+             
+              setIsPlaying(true); 
+              setIsFinished(false);
+             
+              await startRecording(); 
               dispatch(clearRecord());
             })
             .catch((playError) => {
@@ -133,15 +126,15 @@ export default function OneSongPage(): JSX.Element {
         }
         return null;
       });
-    }, 1000); // Интервал в 1 секунду
+    }, 1000);
   };
 
   const handleRestart = async (): Promise<void> => {
     if (audioRef.current) {
-      audioRef.current.currentTime = 0; // Сбрасываем время аудио
-      await audioRef.current.play(); // Ждем, пока аудио начнет воспроизводиться
-      setIsFinished(false); // Сбрасываем завершение при перезапуске
-      await startRecording(); // Перезапускаем запись, ожидая завершения
+      audioRef.current.currentTime = 0;
+      await audioRef.current.play(); 
+      setIsFinished(false);
+      await startRecording();
       dispatch(clearRecord());
     }
   };
@@ -156,7 +149,7 @@ export default function OneSongPage(): JSX.Element {
       if (activeSubtitleIndex !== -1) {
         setCurrentSubtitleIndex(activeSubtitleIndex);
 
-        // Рассчитываем индекс текущего слова на основе времени
+        
         const activeSubtitle = subtitles[activeSubtitleIndex];
         const words = activeSubtitle.text.split(' ');
         const timePerWord = (activeSubtitle.endTime - activeSubtitle.startTime) / words.length;
@@ -164,16 +157,16 @@ export default function OneSongPage(): JSX.Element {
 
         setHighlightedWordIndex(wordIndex);
       } else {
-        setCurrentSubtitleIndex(-1); // Если нет активного субтитра
+        setCurrentSubtitleIndex(-1); 
       }
     }
   };
 
-  // Завершаем запись и помечаем песню как завершённую
+ 
   const handleEnded = (): void => {
-    stopRecording(); // Останавливаем запись
-    setIsPlaying(false); // Останавливаем воспроизведение
-    setIsFinished(true); // Помечаем как завершённое
+    stopRecording(); 
+    setIsPlaying(false); 
+    setIsFinished(true);
   };
 
   useEffect(() => {

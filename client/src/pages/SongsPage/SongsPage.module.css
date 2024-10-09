@@ -1,23 +1,23 @@
 .pageContainer {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрирование по горизонтали */
-  justify-content: flex-start; /* Вертикальное начало */
-  height: 100vh; /* Занять всю высоту экрана */
+  align-items: center; 
+  justify-content: flex-start; 
+  height: 100vh; 
 }
 
 .contentContainer {
   display: flex;
-  flex-direction: column; /* Вертикальная ориентация */
-  align-items: center; /* Центрирование по горизонтали */
-  justify-content: center; /* Центрирование по вертикали */
-  flex-grow: 1; /* Позволяет контейнеру занимать оставшееся пространство */
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  flex-grow: 1; 
 }
 
 .gridItem {
-  display: flex; /* Flexbox для элементов сетки */
-  justify-content: center; /* Центрирование элементов в сетке */
-  margin-bottom: 20px; /* Отступ между карточками */
+  display: flex;
+  justify-content: center; 
+  margin-bottom: 20px;
 }
 
 .casset {

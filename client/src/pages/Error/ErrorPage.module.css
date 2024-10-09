@@ -27,6 +27,21 @@
   white-space: nowrap;
 }
 
+.errorButton {
+    position: absolute; 
+    top: calc(80% + 70px); 
+    left: 50%;
+    transform: translateX(-50%); 
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border: 3px solid white;
+    outline: none;
+    background-color: transparent;
+    color: white;
+    font-family: 'Rubik Mono One', monospace;
+  }
+
 @keyframes spiral {
   0% {
     transform: translate(0, 0) scale(1);

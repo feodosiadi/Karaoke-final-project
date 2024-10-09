@@ -8,13 +8,11 @@ import './NavBar.style.css';
 export default function NavBar(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  // const icon = <IconLogout size={14} />;
 
   return (
     <div className="nav-container">
       <Text
         className="nav-title"
-        // weight={700}
         size="xl"
         style={{ cursor: 'pointer' }}
         onClick={() => navigate('/')}
