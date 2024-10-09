@@ -1,8 +1,17 @@
 .loaderContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Высота на весь экран */
-}
-
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    position: relative; 
+  }
+  
+  .loaderVideo {
+    width: 800px;
+    height: 800px;
+    object-fit: contain; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+  }

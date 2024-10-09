@@ -1,12 +1,12 @@
 .pageContainer {
-  display: flex; /* Включаем flexbox */
-  flex-direction: column; /* Вертикальная ориентация */
-  align-items: center; /* Центрирование по горизонтали */
-  justify-content: center; /* Центрирование по вертикали */
-  height: 100vh; /* Занять всю высоту экрана */
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  height: 100vh;
   text-align: center;
   padding: 20px;
-  background-color: black; /* Добавить фон, если нужно */
+  background-color: black;
 }
 
 .button {
@@ -64,21 +64,21 @@
 }
 
 .buttonChangeSong {
-  position: fixed; /* Закрепляем позицию */
-  bottom: 20px; /* Расположение от низа */
-  right: 20px; /* Расположение от правого края */
-  background-color: transparent; /* Прозрачный фон */
-  border: 2px solid white; /* Белая рамка */
-  color: white; /* Цвет текста */
-  padding: 10px 20px; /* Отступы для удобства */
-  cursor: pointer; /* Указатель при наведении */
-  border-radius: 5px; /* Закругленные углы */
-  font-size: 16px; /* Размер шрифта */
-  transition: background-color 0.3s; /* Плавный переход */
-  z-index: 10; /* Поднимаем кнопку выше других элементов */
+  position: fixed; 
+  bottom: 20px; 
+  right: 20px; 
+  background-color: transparent; 
+  border: 2px solid white; 
+  color: white; 
+  padding: 10px 20px; 
+  cursor: pointer; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  transition: background-color 0.3s; 
+  z-index: 10; 
 }
 
 .buttonChangeSong:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Легкое затемнение при наведении */
+  background-color: rgba(255, 255, 255, 0.1); 
 }
 

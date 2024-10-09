@@ -6,11 +6,16 @@ const cookiesConfig = require('../configs/cookiesConfig');
 const tokensRouter = express.Router();
 
 tokensRouter.get('/refresh', verifyRefreshToken, async (req, res) => {
-  const { accessToken, refreshToken } = generateTokens({ user: res.locals.user });
-  res
-    .status(200)
-    .cookie('refreshToken', refreshToken, cookiesConfig)
-    .json({ accessToken, user: res.locals.user });
+  try {
+    const { accessToken, refreshToken } = generateTokens({ user: res.locals.user });
+    res
+      .status(200)
+      .cookie('refreshToken', refreshToken, cookiesConfig)
+      .json({ accessToken, user: res.locals.user });
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
 });
 
 module.exports = tokensRouter;

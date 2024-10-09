@@ -12,9 +12,16 @@ export default function LoaderProvider({ children }: LoaderProviderProps): JSX.E
 
   if (loading) {
     return (
-      <div className={styles.loaderContainer}>
-        <img src="../../../public/img/loader.gif" alt="Loading..." className={styles.loaderImage} />
-      </div>
+      // <div className={styles.loaderContainer}>
+      //   <img src="../../../public/img/loader.gif" alt="Loading..." className={styles.loaderImage} />
+      // </div>
+      <video
+          src="../../../../public/loader/loader.mp4"
+          className={styles.loaderVideo}
+          autoPlay
+          loop
+          muted
+        />
     );
   }
 
