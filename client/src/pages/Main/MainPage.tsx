@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useRef, useState } from 'react';
 import { Button, Group, Grid, Container, Title, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
@@ -9,19 +10,23 @@ export default function MainPage(): JSX.Element {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const toggleBrightness = () => {
+  const toggleBrightness = (): void => {
     setBrightness((prevBrightness) => (prevBrightness === 1 ? 0.5 : 1));
   };
 
-  const playMusic = () => {
+  const playMusic = async (): Promise<void> => {
     if (audioRef.current) {
-      if (!isPlaying) {
-        audioRef.current.volume = 0.06;
-        audioRef.current.play();
-        setIsPlaying(true);
-      } else {
-        audioRef.current.pause();
-        setIsPlaying(false);
+      try {
+        if (!isPlaying) {
+          audioRef.current.volume = 0.06;
+          await audioRef.current.play();
+          setIsPlaying(true);
+        } else {
+          audioRef.current.pause();
+          setIsPlaying(false);
+        }
+      } catch (error) {
+        console.error('Ошибка при воспроизведении аудио:', error);
       }
     }
   };
@@ -30,15 +35,17 @@ export default function MainPage(): JSX.Element {
     <div className="container">
       <div
         className="lights"
-        style={{
-          '--brightness': brightness,
-        }}
+        style={
+          {
+            '--brightness': brightness,
+          } as React.CSSProperties
+        }
       />
 
       <div className="text-container">
         <Container size="lg">
           <Grid justify="center" align="center" gutter="lg">
-            <Grid.Col span={6} className="center-text" onClick={playMusic}>
+            <Grid.Col span={6} className="center-text" onClick={() => void playMusic()}>
               <img
                 src="../../../public/img/Plastinka.PNG"
                 alt="Spinning Vinyl"
@@ -88,12 +95,13 @@ export default function MainPage(): JSX.Element {
         </Container>
       </div>
 
-      <img
-        onClick={toggleBrightness}
-        className="fixed-button"
-        src={brightness === 1 ? '../../public/img/toggleOn.png' : '../../public/img/toggleOf.png'}
-        alt={brightness === 1 ? 'Выключить свет' : 'Включить свет'}
-      />
+      <button onClick={toggleBrightness} className="fixed-button" type="button">
+        <img
+          className="fixed-button"
+          src={brightness === 1 ? '../../public/img/toggleOn.png' : '../../public/img/toggleOf.png'}
+          alt={brightness === 1 ? 'Выключить свет' : 'Включить свет'}
+        />
+      </button>
 
       <audio
         ref={audioRef}

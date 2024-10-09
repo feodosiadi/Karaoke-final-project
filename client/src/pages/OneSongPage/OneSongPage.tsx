@@ -265,6 +265,11 @@ export default function OneSongPage(): JSX.Element {
         {isFinished && score && (
           <div className={styles.finishedMessage}>Да Вы просто звезда! Ваш счёт – {score} </div>
         )}
+
+        {isFinished && !score && (
+          <div className={styles.finishedMessage}>Считаю баллы. Обождите</div>
+        )}
+
       </Container>
       <Button onClick={() => navigate(-1)} className={styles.buttonChangeSong}>
         Сменить песню

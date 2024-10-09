@@ -14,15 +14,7 @@ export default function AppProvider({ children }: AppProviderProps): JSX.Element
     <Provider store={store}>
       <AuthProvider>
         <LoaderProvider>
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              colorScheme: 'light',
-            }}
-          >
-            {children}
-          </MantineProvider>
+          <MantineProvider>{children}</MantineProvider>
         </LoaderProvider>
       </AuthProvider>
     </Provider>
