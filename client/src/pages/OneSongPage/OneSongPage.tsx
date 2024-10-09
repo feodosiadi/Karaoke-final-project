@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/media-has-caption */
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, Container } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
@@ -14,24 +16,23 @@ export default function OneSongPage(): JSX.Element {
   const params = useParams();
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState<string | null>(null);
-  const [isFinished, setIsFinished] = useState(false); // Состояние для завершения аудио
+  const [isFinished, setIsFinished] = useState(false); 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
   const navigate = useNavigate();
   const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
-  const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState<number>(-1); // Индекс текущего субтитра
-  const [highlightedWordIndex, setHighlightedWordIndex] = useState<number>(-1); // Индекс слова, которое поётся сейчас
-  const [isPlaying, setIsPlaying] = useState<boolean>(false); // Состояние для отслеживания воспроизведения
-  const [timer, setTimer] = useState<number | null>(null); // Для отсчета времени
+  const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState<number>(-1); 
+  const [highlightedWordIndex, setHighlightedWordIndex] = useState<number>(-1); 
+  const [isPlaying, setIsPlaying] = useState<boolean>(false); 
+  const [timer, setTimer] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const score = useAppSelector((store) => store.record.record?.score);
   const oneSong = useAppSelector((store) => store.songs.oneSong);
   const error = useAppSelector((store) => store.songs.error);
 
-  console.log(error);
+  console.log(isRecording, audioURL);
 
-  // Начало записи
-  const startRecording = async () => {
+  const startRecording = async (): Promise<void> => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
@@ -39,7 +40,7 @@ export default function OneSongPage(): JSX.Element {
 
       mediaRecorder.start();
       setIsRecording(true);
-      audioChunks.current = []; // Очистим старые данные перед началом новой записи
+      audioChunks.current = []; 
 
       mediaRecorder.ondataavailable = (event) => {
         audioChunks.current.push(event.data);
@@ -50,19 +51,17 @@ export default function OneSongPage(): JSX.Element {
         setAudioURL(URL.createObjectURL(audioBlob));
 
         const formData = new FormData();
-        formData.append('record', audioBlob, 'recording.wav'); // Добавляем Blob и указываем имя файла
+        formData.append('record', audioBlob, 'recording.wav'); 
 
-        // Отправляем данные через thunk
         console.log('Отправка новой записи:', audioBlob);
-        void dispatch(postOneRecordThunk({ id: params.songId, data: formData }));
+        void dispatch(postOneRecordThunk({ id: Number(params.songId), data: formData }));
       };
     } catch (err) {
       console.error('Ошибка доступа к микрофону:', err);
     }
   };
 
-  // Остановка записи
-  const stopRecording = () => {
+  const stopRecording = (): void => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
@@ -75,66 +74,72 @@ export default function OneSongPage(): JSX.Element {
     text: string;
   };
 
-  const parseSRT = (srtText: string): Subtitle[] => {
-    console.log('Текст субтитров:', srtText); // Отладочный вывод для проверки
+  const parseTime = (timeString: string): number => {
+    const [hours, minutes, seconds] = timeString.split(':');
+    const [sec, ms] = seconds.split(',');
+    return parseInt(hours, 10) * 3600 + parseInt(minutes, 10) * 60 + parseFloat(`${sec}.${ms}`);
+  };
+
+  const parseSRT = useCallback((srtText: string): Subtitle[] => {
+    console.log('Текст субтитров:', srtText);
     return srtText
       .split('\n\n')
       .map((block) => {
         const lines = block.split('\n');
-        if (lines.length < 2) return null; // Проверка на количество строк в блоке
+        if (lines.length < 2) return null; 
 
         const times = lines[1]?.split(' --> ');
-        if (!times || times.length < 2) return null; // Если формат неверный, пропускаем блок
+        if (!times || times.length < 2) return null; 
 
         const startTime = parseTime(times[0]);
         const endTime = parseTime(times[1]);
-        const text = lines.slice(2).join('\n'); // Оставляем переносы строк
+        const text = lines.slice(2).join('\n'); 
         return { startTime, endTime, text };
       })
-      .filter(Boolean) as Subtitle[]; // Фильтруем null значения и приводим тип
-  };
+      .filter(Boolean) as Subtitle[]; 
+  }, []); 
+  const handlePlay = async (): Promise<void> => {
+    setTimer(3);
 
-  const parseTime = (timeString: string): number => {
-    const [hours, minutes, seconds] = timeString.split(':');
-    const [sec, ms] = seconds.split(',');
-    return parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseFloat(`${sec}.${ms}`);
-  };
-
-  const handlePlay = () => {
-    // Запускаем таймер обратного отсчета
-    setTimer(3); // Таймер отсчета
-
-    const countdown = setInterval(() => {
+    const countdown = setInterval(async () => {
       setTimer((prevTimer) => {
         if (prevTimer !== null && prevTimer > 0) {
-          return prevTimer - 1; // Уменьшаем таймер каждую секунду
+          return prevTimer - 1; 
         }
-        clearInterval(countdown); // Останавливаем таймер, когда он доходит до 0
-        setTimer(null); // Сбрасываем таймер
+        clearInterval(countdown);
+        setTimer(null); 
 
         if (audioRef.current) {
-          audioRef.current.play(); // Начинаем проигрывание песни
-          setIsPlaying(true); // Отмечаем, что песня началась
-          setIsFinished(false); // Сбрасываем завершение
-          startRecording(); // Начало записи
-          dispatch(clearRecord());
+          audioRef.current
+            .play()
+            .then(async () => {
+             
+              setIsPlaying(true); 
+              setIsFinished(false);
+             
+              await startRecording(); 
+              dispatch(clearRecord());
+            })
+            .catch((playError) => {
+              console.error('Ошибка при воспроизведении аудио:', playError);
+            });
         }
         return null;
       });
-    }, 1000); // Интервал в 1 секунду
+    }, 1000);
   };
 
-  const handleRestart = () => {
+  const handleRestart = async (): Promise<void> => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play();
-      setIsFinished(false); // Сбрасываем завершение при перезапуске
-      startRecording(); // Перезапускаем запись
+      await audioRef.current.play(); 
+      setIsFinished(false);
+      await startRecording();
       dispatch(clearRecord());
     }
   };
 
-  const handleTimeUpdate = () => {
+  const handleTimeUpdate = (): void => {
     if (audioRef.current) {
       const { currentTime } = audioRef.current;
       const activeSubtitleIndex = subtitles.findIndex(
@@ -144,7 +149,7 @@ export default function OneSongPage(): JSX.Element {
       if (activeSubtitleIndex !== -1) {
         setCurrentSubtitleIndex(activeSubtitleIndex);
 
-        // Рассчитываем индекс текущего слова на основе времени
+        
         const activeSubtitle = subtitles[activeSubtitleIndex];
         const words = activeSubtitle.text.split(' ');
         const timePerWord = (activeSubtitle.endTime - activeSubtitle.startTime) / words.length;
@@ -152,16 +157,16 @@ export default function OneSongPage(): JSX.Element {
 
         setHighlightedWordIndex(wordIndex);
       } else {
-        setCurrentSubtitleIndex(-1); // Если нет активного субтитра
+        setCurrentSubtitleIndex(-1); 
       }
     }
   };
 
-  // Завершаем запись и помечаем песню как завершённую
-  const handleEnded = () => {
-    stopRecording(); // Останавливаем запись
-    setIsPlaying(false); // Останавливаем воспроизведение
-    setIsFinished(true); // Помечаем как завершённое
+ 
+  const handleEnded = (): void => {
+    stopRecording(); 
+    setIsPlaying(false); 
+    setIsFinished(true);
   };
 
   useEffect(() => {
@@ -186,13 +191,15 @@ export default function OneSongPage(): JSX.Element {
           const parsedSubtitles = parseSRT(data);
           setSubtitles(parsedSubtitles);
         })
-        .catch((error) => {
-          console.error('Ошибка при загрузке субтитров:', error);
+        .catch((subtitleError) => {
+          console.error('Ошибка при загрузке субтитров:', subtitleError);
         });
     }
-  }, [oneSong?.subtitles]);
+  }, [oneSong?.subtitles, parseSRT]);
 
-  if (error) { return <ErrorPage />}
+  if (error) {
+    return <ErrorPage />;
+  }
 
   return (
     <div className={styles.pageContainer}>
@@ -201,13 +208,13 @@ export default function OneSongPage(): JSX.Element {
         <h1>{oneSong?.name} - Караоке</h1>
 
         {!isPlaying && !timer && !isFinished && (
-          <button onClick={handlePlay} className={styles.button}>
+          <button onClick={() => void handlePlay()} type="button" className={styles.button}>
             Начать запись
           </button>
         )}
 
         {isPlaying && !isFinished && (
-          <button onClick={handleRestart} className={styles.button}>
+          <button onClick={() => void handleRestart()} type="button" className={styles.button}>
             Записать заново
           </button>
         )}
@@ -264,6 +271,10 @@ export default function OneSongPage(): JSX.Element {
 
         {isFinished && score && (
           <div className={styles.finishedMessage}>Да Вы просто звезда! Ваш счёт – {score} </div>
+        )}
+
+        {isFinished && !score && (
+          <div className={styles.finishedMessage}>Считаю баллы. Обождите</div>
         )}
       </Container>
       <Button onClick={() => navigate(-1)} className={styles.buttonChangeSong}>

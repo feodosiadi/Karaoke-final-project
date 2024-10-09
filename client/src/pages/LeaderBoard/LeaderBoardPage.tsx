@@ -10,7 +10,7 @@ export default function LeaderBoardPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllLeadersThunk());
+    void dispatch(getAllLeadersThunk());
   }, [dispatch]);
 
   return (
@@ -29,7 +29,7 @@ export default function LeaderBoardPage(): JSX.Element {
           <Table.Tbody>
             {allLeaders.map((onesong, index) => (
               <Table.Tr key={onesong.id}>
-                <Table.Td>{index + 1}</Table.Td> {/* Индекс + 1 для правильного номера */}
+                <Table.Td>{index + 1}</Table.Td> 
                 <Table.Td>{onesong.User.name}</Table.Td>
                 <Table.Td>{onesong.Song.name}</Table.Td>
                 <Table.Td>{onesong.score}</Table.Td>

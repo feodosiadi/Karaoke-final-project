@@ -5,17 +5,17 @@
   min-height: 0;
   width: 100vw;
   z-index: 100;
-  background-color: transparent; /* Светло-серый фон */
-  padding: 10px; /* Отступы внутри контейнера */
-  display: flex; /* Гибкий контейнер для выравнивания содержимого */
-  align-items: center; /* Центровка элементов по вертикали */
+  background-color: transparent; 
+  padding: 10px; 
+  display: flex; 
+  align-items: center; 
 }
 
 .nav-title {
   position: absolute;
   top: 2rem;
   left: 50%;
-  transform: translateX(-50%); /* Точное выравнивание по центру экрана */
+  transform: translateX(-50%); 
   color: #fff;
   font-size: 2.5rem;
   margin-bottom: 4%;
@@ -30,25 +30,25 @@
 }
 
 .custom-button {
-  background-color: transparent; /* Прозрачный фон */
-  border: 2px solid white; /* Белая граница */
-  color: white; /* Белый шрифт */
-  font-size: 1rem; /* Размер шрифта */
+  background-color: transparent; 
+  border: 2px solid white; 
+  color: white; 
+  font-size: 1rem; 
   transition:
     background-color 0.3s ease,
-    color 0.3s ease; /* Плавные переходы */
+    color 0.3s ease; 
 }
 
 .custom-button:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Легкий фон при наведении */
-  color: white; /* Цвет шрифта при наведении */
+  background-color: rgba(255, 255, 255, 0.1); 
+  color: white; 
 }
 
 .logout-button {
-  border-color: red; /* Красная граница для кнопки "Выйти" */
+  border-color: red; 
 }
 
 .logout-button:hover {
-  background-color: rgba(255, 0, 0, 0.2); /* Красный фон при наведении */
-  color: red; /* Красный шрифт при наведении */
+  background-color: rgba(255, 0, 0, 0.2); 
+  color: red;
 }

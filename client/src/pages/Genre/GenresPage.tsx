@@ -5,7 +5,6 @@ import NavBar from '../../widgets/NavBar/NavBar';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { getAllGenresThunk } from '../../enteties/Genre/model/genreThunk';
 import './GenresPage.style.css';
-import { clearLoading } from '../../enteties/User/model/authSlice';
 
 export default function GenresPage(): JSX.Element {
   const genres = useAppSelector((store) => store.songs.genre);
@@ -18,10 +17,10 @@ export default function GenresPage(): JSX.Element {
     void dispatch(getAllGenresThunk());
   }, [dispatch]);
 
-  const getRandomColor = () => {
+  const getRandomColor = (): string => {
     const letters = '0123456789ABCDEF';
     let color = '#';
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i += 1) {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;

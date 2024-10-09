@@ -30,8 +30,8 @@ export default function SongsPage(): JSX.Element {
           navigate(`/songs/${songId}`);
         };
       })
-      .catch((error) => {
-        console.error('Ошибка воспроизведения:', error);
+      .catch((playError) => {
+        console.error('Ошибка воспроизведения:', playError);
       });
   };
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../shared/lib/hooks';
 import { loginThunk } from '../../enteties/User/model/authThunk';
 import type { LoginForm } from '../../enteties/User/model/types';
-import { clearLoading, setLoading } from '../../enteties/User/model/authSlice';
+import { setLoading } from '../../enteties/User/model/authSlice';
 
 export default function SignInPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -26,7 +26,7 @@ export default function SignInPage(): JSX.Element {
     ...lampStyle,
     top: 'unset',
     bottom: 0,
-    transform: 'scaleY(-1)', // Отражаем лампочки по вертикали
+    transform: 'scaleY(-1)', 
   };
 
   const containerStyle = {
@@ -36,8 +36,8 @@ export default function SignInPage(): JSX.Element {
     alignItems: 'center',
     minHeight: '100vh',
     position: 'relative',
-    backgroundColor: 'black', // Добавляем черный фон для страницы
-    color: 'white', // Белый цвет текста
+    backgroundColor: 'black',
+    color: 'white', 
   };
 
   return (

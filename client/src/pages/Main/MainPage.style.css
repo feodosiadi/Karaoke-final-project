@@ -89,17 +89,3 @@
     transform: rotate(360deg);
   }
 }
-
-/* @media screen and (max-width: 1500px) {
-  .fixed-button {
-    bottom: -10%;
-    right: -3%;
-  }
-} */
-
-/* @media screen and (max-width: 1200px) {
-  .fixed-button {
-    bottom: -15%;
-    right: -3%;
-  }
-} */

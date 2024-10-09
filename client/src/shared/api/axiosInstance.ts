@@ -26,7 +26,7 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (res) => res,
   async (err: AxiosError & { config: { sent?: boolean } }) => {
-    const prevRequest = err.config; // необходимо чтобы понять что это второй запрос
+    const prevRequest = err.config; 
     if (err.response?.status === 403 && !prevRequest.sent) {
       prevRequest.sent = true;
       const res = await axios('/api/tokens/refresh');
