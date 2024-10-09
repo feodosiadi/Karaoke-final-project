@@ -15,18 +15,74 @@ module.exports = {
      * }], {});
      */
 
-    await queryInterface.bulkInsert(
+    const users = await queryInterface.bulkInsert(
       'Users',
       [
         {
-          name: 'John Doe',
+          name: 'Артём Легенда Кулик',
           email: 'test@test.com',
           password: await bcrypt.hash('123', 10),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          name: 'Павел Иванович Д',
+          email: 'darasov@curd.com',
+          password: await bcrypt.hash('123', 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Юля Павлова',
+          email: 'elbrus1@elbrus.com',
+          password: await bcrypt.hash('123', 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Георгий Бабаян',
+          email: 'elbrus@elbrus.com',
+          password: await bcrypt.hash('123', 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Алексей Сидоров',
+          email: 'elbrus2@elbrus.com',
+          password: await bcrypt.hash('123', 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Дарья Левченко',
+          email: 'elbrus5@elbrus.com',
+          password: await bcrypt.hash('123', 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Юрий Плисковский',
+          email: 'elbrus6@elbrus.com',
+          password: await bcrypt.hash('123', 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Александр Ворона',
+          email: 'elbrus9@elbrus.com',
+          password: await bcrypt.hash('123', 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'Юлия Лапикова',
+          email: 'elbrus12@elbrus.com',
+          password: await bcrypt.hash('123', 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
-      {},
+      { returning: true},
     );
 
     const genres = await queryInterface.bulkInsert(
@@ -48,7 +104,7 @@ module.exports = {
       { returning: true },
     );
 
-    await queryInterface.bulkInsert(
+    const songs = await queryInterface.bulkInsert(
       'Songs',
       [
         {
@@ -101,7 +157,77 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+      ],
+      { returning: true},
+    );
 
+    await queryInterface.bulkInsert(
+      'Records',
+      [
+        {
+          record: '/empty',
+          userId: users[2].id,
+          songId: songs[2].id,
+          score: 100,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          record: '/empty',
+          userId: users[1].id,
+          songId: songs[3].id,
+          score: 80,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          record: '/empty',
+          userId: users[3].id,
+          songId: songs[4].id,
+          score: 65,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          record: '/empty',
+          userId: users[4].id,
+          songId: songs[2].id,
+          score: 81,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          record: '/empty',
+          userId: users[5].id,
+          songId: songs[2].id,
+          score: 75,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          record: '/empty',
+          userId: users[6].id,
+          songId: songs[2].id,
+          score: 87,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          record: '/empty',
+          userId: users[7].id,
+          songId: songs[2].id,
+          score: 75,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          record: '/empty',
+          userId: users[8].id,
+          songId: songs[2].id,
+          score: 88,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {},
     );
@@ -118,5 +244,7 @@ module.exports = {
     await queryInterface.bulkDelete('Songs', null, {});
     await queryInterface.bulkDelete('Genres', null, {});
     await queryInterface.bulkDelete('Users', null, {});
+    await queryInterface.bulkDelete('Records', null, {});
+
   },
 };
