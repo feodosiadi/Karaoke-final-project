@@ -6,4 +6,5 @@ const genreSchema = z.object({
   name: z.string(),
 });
 
+
 export default genreSchema;

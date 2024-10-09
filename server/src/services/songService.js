@@ -8,7 +8,12 @@ class SongService {
   }
 
   async getSongsByGenreId(id) {
-    const data = await this.#models.Song.findAll({ where: { genreId: id } });
+    const data = await this.#models.Song.findAll({
+      where: { genreId: id },
+      include: {
+        model: this.#models.Genre,
+      },
+    });
     return data;
   }
 
