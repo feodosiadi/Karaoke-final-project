@@ -45,7 +45,7 @@ export default function MainPage(): JSX.Element {
           <Grid justify="center" align="center" gutter="lg">
             <Grid.Col span={6} className={styles.centerText} onClick={() => void playMusic()}>
               <img
-                src="../../../public/img/Plastinka.PNG"
+                src="../../../public/img/Plastinka-2.PNG"
                 alt="Spinning Vinyl"
                 className={styles.spinningVinyl}
               />
